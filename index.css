@@ -1,0 +1,132 @@
+.login-left-rect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #121212;
+    width: 20%;
+    height: 100vh;
+  }
+  .login-item {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -45%);
+    width: 50vh;
+    height: 35vh;
+    object-fit: cover;
+  }
+  .sign-in {
+    position: absolute;
+    top: 0;
+    left: 180px;
+    font-size: 48px;
+  }
+  .create-your-secure {
+    position: absolute;
+    top: 74px;
+    left: 92px;
+    font-size: var(--font-size-5xl);
+  }
+  .sign-up-here {
+    color: var(--color-mediumseagreen);
+  }
+  .dont-have-an-container {
+    position: absolute;
+    top: 114px;
+    left: 36px;
+    font-size: var(--font-size-5xl);
+    cursor: pointer;
+  }
+  .email,
+  .group-child {
+    position: absolute;
+    left: 0;
+  }
+  .group-child {
+    border: 0;
+    background-color: var(--color-gainsboro);
+    top: 224px;
+    border-radius: var(--br-3xs);
+    width: 534px;
+    height: 71px;
+  }
+  .email {
+    top: 191px;
+    text-align: left;
+  }
+  .group-inner,
+  .group-item {
+    border: 0;
+    background-color: var(--color-gainsboro);
+    position: absolute;
+    top: 390px;
+    left: 0;
+    border-radius: var(--br-3xs);
+    width: 534px;
+    height: 71px;
+  }
+  .group-inner {
+    cursor: pointer;
+    padding: 0;
+    background-color: var(--color-mediumseagreen);
+    top: 523px;
+  }
+  .login1,
+  .reset-password {
+    position: absolute;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .login1 {
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    top: 548px;
+    left: 237px;
+    font-size: var(--font-size-xl);
+    font-family: var(--font-comfortaa);
+    color: var(--color-gainsboro);
+    text-align: left;
+    display: inline-block;
+  }
+  .reset-password {
+    text-decoration: none;
+    top: 645px;
+    left: 186px;
+    color: var(--color-mediumseagreen);
+  }
+  .password {
+    position: absolute;
+    top: 357px;
+    left: 0;
+    text-align: left;
+  }
+  .sign-in-parent {
+    position: absolute;
+    top: 50vh;
+    left: 65vh;
+    transform: translate(40vh, -30vh);
+    width: 60vh;
+    height: 45vh;
+  }
+  .login-inner {
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: 0;
+    background-color: var(--color-mediumseagreen);
+    width: 16px;
+    height: 100vh;
+  }
+  .login {
+    position: relative;
+    background-color: #1a1919;
+    width: 100%; /* Set the width to 100% to adapt to the browser width */
+    height: 100vh; /* Set the height to 100vh to adapt to the viewport height */
+    overflow: hidden;
+    text-align: center;
+    font-size: var(--font-size-xl);
+    color: var(--color-gainsboro);
+    font-family: var(--font-comfortaa);
+}
+  
