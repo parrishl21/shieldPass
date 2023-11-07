@@ -28,14 +28,6 @@ CREATE TABLE notes (
 	updated_at TIMESTAMP DEFAULT current_timestamp NOT NULL
 );
 
-SELECT * FROM users;
-SELECT * FROM login;
-SELECT * FROM notes;
-
-DROP TABLE users;
-DROP TABLE login;
-DROP TABLE notes;
-
 CREATE OR REPLACE FUNCTION set_company() RETURNS TRIGGER AS $$
 BEGIN
     IF NEW.company IS NULL THEN
