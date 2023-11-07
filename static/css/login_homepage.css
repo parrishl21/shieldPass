@@ -1,0 +1,272 @@
+th, td {
+    padding: 15px 10px;
+    text-align: left;
+}
+tr {
+    border-bottom: 1px solid #ddd;
+}
+tr:hover {background-color: #0DBC62;}
+table {
+    width: 92%;
+    border-collapse: collapse;
+    margin: auto;
+}
+.filter-container {
+    position: relative;
+}
+.filter {
+    margin-top: -25px;
+    position: absolute;
+    right: 130px;
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    font-size: 16px;
+    line-height: 16px;
+    background: none;
+}
+.filter-slide-out-buttons {
+    margin-top: -22px;
+    right: 345px;
+    display: none;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+.filter-show-buttons {
+    padding: 0;
+    font-size: 16px;
+    line-height: 16px;
+    background: none;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+.filter-show-buttons:hover {
+    color: #C4C4C4;
+}
+.filter:hover,
+.filter:hover span {
+    color: #C4C4C4;
+}
+.left-column {
+    width: 5%;
+    text-align: center;
+}
+.right-column {
+    width: 95%;
+    font-size: 18px;
+    text-transform: capitalize
+}
+.left_rectangle {
+    width: 25%;
+    height: 100%;
+    background-color: #121212;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.logo-img {
+    max-width: 70px;
+    max-height: 70px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+/* .right_rectangle {
+    width: 1%;
+    height: 100%;
+    background-color: #0DBC62;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+} */
+.add_password_button {
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+  }
+.add_password_button:hover {
+    background-color: #11E779;
+}
+.add_password_button::before {
+content: "+";
+transform: scale(0.7); /* Adjust the scale to make it thinner */
+}
+/* Styles for the modal overlay */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.8); 
+    overflow: hidden;
+}
+  /* Styles for the modal content */
+.modal-content {
+    background-color: #121212;
+    margin: 10% auto; 
+    padding: 30px;
+    border: 1px solid #2F2F2F;
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+  /* Style for the close button */
+.close {
+    color: #aaaaaa;
+    right: 10px;
+    top: 0;
+    font-size: 38px;
+    position: absolute;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #6e6e6e;
+    text-decoration: none;
+    cursor: pointer;
+}
+.modal-confirm {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.8); 
+    overflow: hidden;
+}
+  /* Styles for the modal content */
+.modal-confirm-content {
+    background-color: #121212;
+    margin: 10% auto; 
+    padding: 30px;
+    border: 1px solid #2F2F2F;
+    width: 350px;
+    height: 175px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.confirm-modal-text {
+    margin-bottom: 10px;
+    font-size: 21px;
+    text-align: center;
+}
+.new-password-text {
+    margin-bottom: 10px;
+    font-size: 21px;
+}
+.new-password-input {
+    margin-bottom: 20px;
+    height: 65px;
+    border-radius: 10px;
+    text-indent: 15px;
+    font-size: 20px;
+    color: black;
+}
+.new-password-button {
+    background-color: #0DBC62;
+    height: 80px;
+    cursor: pointer;
+    border: none;
+    font-size: 25px;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+.edit-save-delete-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+.edit-button {
+    flex-grow: 1;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+.save-button {
+    flex-grow: 0;
+    width: 50%; /* Adjust the width as needed */
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+.delete-button {
+    flex-grow: 0;
+    width: 50%; /* Adjust the width as needed */
+    background: none;
+    color: red;
+}
+.invalid_email {
+    display: none;
+    color: red;
+    margin-top: 10px;
+}
+.input-with-button {
+    position: relative;
+}
+.new-password-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+}
+.copy-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-65%);
+    right: 5px;
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 28px;
+}
+#fixed-section {
+    width: 25%;
+    height: 100vh;
+    position: fixed;
+    background-color: #121212;
+}
+#scrollable-section {
+    width: 75%;
+    height: 100vh;
+    overflow-y: auto;
+    margin-left: 25%;
+    /* background-color: #e6e6e6; */
+}
+/* Customize the scrollbar */
+#scrollable-section::-webkit-scrollbar {
+    width: 12px;
+}
+#scrollable-section::-webkit-scrollbar-track {
+    background: #3F3C3C;
+}
+#scrollable-section::-webkit-scrollbar-thumb {
+    background: #0DBC62;
+}
+#scrollable-section::-webkit-scrollbar-thumb:hover {
+    background: #11E779;
+}

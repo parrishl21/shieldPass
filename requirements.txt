@@ -1,0 +1,9 @@
+psycopg2
+flask
+Jinja2
+markupsafe
+python-dotenv
+flask_mail
+Flask-Login
+werkzeug==2.3.0
+cryptography

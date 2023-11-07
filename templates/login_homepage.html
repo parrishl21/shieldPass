@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Homepage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_homepage.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-... " crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/login_homepage.js') }}"></script>
+</head>
+
+<body>
+    <div class="left_rectangle" id="fixed-section">
+        <input id="searchInput" type="text" onkeyup="searchDatabase()" placeholder="Search" style="color: black;">
+    </div>
+    <div class="main-content" id="scrollable-section">
+        <h1 style="margin-top: 50px; margin-bottom: 25px; margin-left: 20px;">Logins</h1>
+        <div class="filter-container">
+            <button onclick="showButtons()" class="filter">
+                <span style="font-size: 32px;">≡</span> Filter
+            </button>
+            <div class="filter-slide-out-buttons" id="filter-slide-out-buttons">
+                <button class="filter-show-buttons" style="left: 40px; color: #0DBC62" onclick="changeColor('A-Z')">A-Z</button>
+                <button class="filter-show-buttons" style="left: 60px;" onclick="changeColor('Z-A')">Z-A</button>
+                <button class="filter-show-buttons" style="left: 80px;" onclick="changeColor('Oldest')">Oldest</button>
+                <button class="filter-show-buttons" style="left: 100px;" onclick="changeColor('Newest')">Newest</button>
+                <button class="filter-show-buttons" style="left: 120px;" onclick="changeColor('Popular')">Popular</button>
+            </div>
+        </div>
+        <table>
+            {% for row_id, row in sql_table %}
+            <tr onclick="fetchLoginInfo({{row_id}})">
+                {% for col in row %}
+                    <td class="left-column"><img class="logo-img" src="https://logo.clearbit.com/{{col}}.com?size=45" onerror="replaceWithErrorImage(this)" alt="No Logo"></td>
+                    <td class="right-column">{{col}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+        <button onclick="openModal()" class="add_password_button"></button>
+        <form id="loginForm" action="/login_homepage" method="post">
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <p class="new-password-text" style="justify-content: space-between; display: flex;">Website</p>
+                    <input class="new-password-input" id="new-website" name="new-website" type="text" placeholder="Website">
+                    <p class="new-password-text">Email</p>
+                    <input class="new-password-input" id="new-email" name="new-email" type="text" placeholder="Email">
+                    <p class="new-password-text">Username</p>
+                    <input class="new-password-input" id="new-username" name="new-username" type="text" placeholder="Username">
+                    <p class="new-password-text">Password</p>
+                    <input class="new-password-input" id="new-password" name="new-password" type="text" placeholder="Password">
+                    <button class="new-password-button" onclick="ValidateEmail()">Add</button>
+                    <p class="invalid_email" id="invalid_email">Invalid email address.</p>
+                    <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
+                </div>
+            </div>
+        </form>
+        <form id="loginForm_view" action="/login_homepage" method="post">
+            <div id="myModal_view" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModalView()">&times;</span>
+                    <p class="new-password-text" style="justify-content: space-between; display: flex;">Website</p>
+                    <input class="new-password-input" id="new-website-view" name="new-website-view" type="text" placeholder="Website" readonly>
+                    <p class="new-password-text">Email</p>
+                    <div class="input-with-button">
+                        <input class="new-password-input" id="new-email-view" name="new-email-view" type="text" placeholder="Email" readonly>
+                        <button class="copy-button" onclick="copyText('new-email-view')">
+                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                        </button>
+                    </div>
+                    <p class="new-password-text">Username</p>
+                    <div class="input-with-button">
+                        <input class="new-password-input" id="new-username-view" name="new-username-view" type="text" placeholder="Username" readonly>
+                        <button class="copy-button" onclick="copyText('new-username-view')">
+                            <i class="far fa-clone" style="color: #4CAF50;"></i>
+                        </button>
+                    </div>
+                    <p class="new-password-text">Password</p>
+                    <div class="input-with-button">
+                        <input class="new-password-input" id="new-password-view" name="new-password-view" type="text" placeholder="Password" readonly>
+                        <button class="copy-button" onclick="copyText('new-password-view')">
+                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                        </button>
+                    </div>
+                    <div class="edit-save-delete-container">
+                        <button class="new-password-button edit-button" onclick="makeEditable()">Edit</button>
+                        <button class="new-password-button delete-button" onclick="openConfirmModal()" style="display: none;">Delete</button>
+                        <button class="new-password-button save-button" onclick="saveChanges()" style="display: none;">Save</button>
+                    </div>
+                    <p class="invalid_email" id="invalid_email">Invalid email address.</p>
+                    <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
+                    <div id="modal-confirm" class="modal-confirm">
+                        <div id="modal-confirm-content" class="modal-confirm-content">
+                            <p class="confirm-modal-text">Are you sure you want to</p>
+                            <p class="confirm-modal-text" style="margin-bottom: 20px;">delete this login?</p>
+                            <div class="edit-save-delete-container">
+                                <button class="new-password-button delete-button" onclick="deleteEntry()">Delete</button>
+                                <button class="new-password-button save-button" onclick="closeModalConform()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

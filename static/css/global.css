@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+
+body {
+    background-color: #1A1919;
+    overflow: hidden;
+}
+* {
+    color: white;
+    font-family: 'Comfortaa';
+    margin: 0;
+}

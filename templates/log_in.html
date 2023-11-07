@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Log In Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/log_in_page.css') }}">
+</head>
+
+<body>
+    <div class="right_rectangle"></div>
+    <div class="left_rectangle"></div>
+    <img class="logo" alt="shieldPass Logo" loading="eager" src="{{ url_for('static', filename='images/logo.png') }}"/>
+    <div class="inputs-container">
+        <div class="sign-up-text"><h1>Sign In</h1></div>
+        <div class="thank-you-text"><p>Create your secure account</p></div>
+        <div class="no-account-container">
+            <div class="no-account-text"><p>Don't have an account? <span style="color: #0DBC62;">Sign up here</span></p></div>
+            <div class="sign-up-button-container"><button class="sign-up-button" onclick="window.location.href='/sign_up'"></button></div>
+        </div>
+        <form id="loginForm" action="/" method="post">
+          <div class="inputs">
+              <div style="margin-bottom: 6px;"><p style="font-size: 20px;">Email</p></div>
+              <input class="input" id="email_input" name="email_input" type="text" placeholder="Email">
+              <p class="invalid_email" id="invalid_email">Invalid email address.</p>
+          </div>
+          <div class="inputs">
+              <div style="margin-bottom: 6px;"><p style="font-size: 20px;">Password</p></div>
+              <div class="password-container">
+                <input class="input" id="password_input" name="password_input" type="password" placeholder="Password">
+                <span class="show-password" onclick="togglePasswordVisibility()">
+                  <img class="show-password-image" src="{{ url_for('static', filename='images/slash_eye.png') }}" id="showImg" alt="Show" style="display: inline;">
+                  <img class="show-password-image" src="{{ url_for('static', filename='images/normal_eye.png') }}" id="hideImg" alt="Hide" style="display: none;">
+                </span>
+              </div>
+          </div>
+        </form>
+        <div class="inputs">
+            <div class="enter-box"></div>
+            <button class="enter-button" onclick="ValidateEmail()">Login</button>
+            {% if message %}
+              <p class="invalid_user" id="user_message">{{ message }}</p>
+            {% endif %}
+        </div>
+        <div class="reset-container">
+            <div class="reset-text"><p><span style="color: #0DBC62;">Reset password</span></p></div>
+            <button class="reset-button" onclick="window.location.href='/reset_password'"></button>
+        </div>
+    </div>
+
+    <script>
+      function ValidateEmail() {
+        var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        clearMessage("user_message");
+
+        if ((document.getElementById('email_input')).value.match(validRegex)) {
+          showEmailMessage(true);
+          return true;
+      
+        } else {
+          showEmailMessage(false);
+          return false;
+        }
+      }
+      
+      function showEmailMessage(input) {
+        var email_i = document.getElementById('invalid_email');
+      
+        email_i.style.display = 'none';
+      
+        if (input === true) {
+          document.getElementById("loginForm").submit();
+        }
+        else {
+          email_i.style.display = 'block';
+        }
+      }
+
+      function clearMessage(id) {
+        var messageElement = document.getElementById(id);
+        if (messageElement) {
+            messageElement.innerText = "";
+        }
+      }
+
+      function togglePasswordVisibility() {
+        var passwordField = document.getElementById('password_input');
+        var showImg = document.getElementById('showImg');
+        var hideImg = document.getElementById('hideImg');
+  
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          showImg.style.display = 'none';
+          hideImg.style.display = 'inline';
+        } else {
+          passwordField.type = 'password';
+          showImg.style.display = 'inline';
+          hideImg.style.display = 'none';
+        }
+      }
+    </script>
+
+</body>
+
+</html>

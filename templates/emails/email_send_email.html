@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- logo link: https://i.ibb.co/542KtJ2/logo.png -->
+<head>
+  <title>Email Two Factor Template</title>
+  <style>
+    .email {
+      text-align: center;
+      padding: 20px;
+    }
+    .logo {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      width: 200px; /* Adjust the width as needed */
+      height: auto; /* Keep the height auto for proportional scaling */
+    }
+    .auth {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+    .text {
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    .input {
+      font-size: 22px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body style="background-color: #1A1919; color: white; font-family: 'Comfortaa', Arial, sans-serif;">
+  <div class="email">
+    <img class="logo" alt="shieldPass Logo" loading="eager" src="https://i.ibb.co/542KtJ2/logo.png" />
+    <h1 class="auth">Reset Your Password</h1>
+    <p class="text">Forgot your password? Click the link below to</p>
+    <p class="text">Please enter the code below to access your account</p>
+    <p class="input">{{ email_link }}</p>
+    <p class="text">Thank you for using ShieldPass</p>
+  </div>
+</body>
+</html>
+

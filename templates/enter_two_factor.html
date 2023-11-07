@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Log In Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/enter-two-factor.css') }}">
+</head>
+
+<body>
+  <div class="right_rectangle"></div>
+  <div class="left_rectangle"></div>
+  <img class="logo" alt="shieldPass Logo" loading="eager" src="{{ url_for('static', filename='images/logo.png') }}" />
+
+  <div class="input-container">
+    <div class="two-way"><h1>Two Factor Authentication</h1></div>
+    <p class="secure">Keep your account secure.</p>
+    <p class="enter-six-digit">Enter your six digit two factor authentication code</p>
+    <form id="loginForm" action="/two_factor" method="post">
+      <div class="two-factor-inputs">
+        <input class="number-input" type="text" maxlength="1" oninput="handleInput(0, this)" onclick="handleClick(this)" id="input0" name="input0">
+        <input class="number-input" type="text" maxlength="1" oninput="handleInput(1, this)" onclick="handleClick(this)" id="input1" name="input1">
+        <input class="number-input" type="text" maxlength="1" oninput="handleInput(2, this)" onclick="handleClick(this)" id="input2" name="input2">
+        <input class="number-input" type="text" maxlength="1" oninput="handleInput(3, this)" onclick="handleClick(this)" id="input3" name="input3">
+        <input class="number-input" type="text" maxlength="1" oninput="handleInput(4, this)" onclick="handleClick(this)" id="input4" name="input4">
+      </div>
+    </form>
+    <p class="invalid_code" id="invalid_code">Missing one or more numbers.</p>
+    <div class="inputs">
+      <div class="enter-box"></div>
+      <button class="enter-button" onclick="confirmCode()">Enter</button>
+      {% if message %}
+        <p class="invalid_code_message" id="code_message">{{ message }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    let previousInput = '';
+
+    function handleInput(index, element) {
+      const input = element.value;
+      if (/[^0-9]/.test(input)) {
+        element.value = input.replace(/[^0-9]/g, '');
+      }
+      if (element.value !== '') {
+        if (index < 4) {
+          const nextInput = document.getElementById('input' + (index + 1));
+          if (nextInput.value === '') {
+            nextInput.focus();
+          }
+          else {
+            element.blur();
+          }
+        } else {
+          element.blur();
+        }
+        previousInput = input;
+      }
+    }
+
+    function clearInput(element) {
+      element.value = '';
+    }
+
+    function handleClick(element) {
+      if (element.value === '') {
+        previousInput = '';
+      } else {
+        <!-- clearInput(element); -->
+        element.select();
+      }
+    }
+
+    function confirmCode() {
+      var code_i = document.getElementById('invalid_code');
+      var input0 = document.getElementById('input0');
+      var input1 = document.getElementById('input1');
+      var input2 = document.getElementById('input2');
+      var input3 = document.getElementById('input3');
+      var input4 = document.getElementById('input4');
+
+      clearMessage("code_message");
+      code_i.style.display = 'none';
+
+      if (input0.value !== '' && input1.value !== '' && input2.value !== '' && input3.value !== '' && input4.value !== '') {
+        document.getElementById("loginForm").submit();
+      }
+      else {
+        code_i.style.display = 'block';
+      }
+    }
+
+    function clearMessage(id) {
+      var messageElement = document.getElementById(id);
+      if (messageElement) {
+        messageElement.innerText = "";
+      }
+    }
+  </script>
+
+</body>
+
+</html>

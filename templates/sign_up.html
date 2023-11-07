@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Log In Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign_up_page.css') }}">
+</head>
+
+<body>
+  <div class="right_rectangle"></div>
+  <div class="left_rectangle"></div>
+  <img class="logo" alt="shieldPass Logo" loading="eager" src="{{ url_for('static', filename='images/logo.png') }}"/>
+  <div class="inputs-container">
+    <div class="sign-up-text"><h1>Sign Up</h1></div>
+    <div class="thank-you-text"><p>Thank you for using ShieldPass</p></div>
+    <form id="loginForm" action="/sign_up" method="post">
+      <div class="inputs">
+        <div style="margin-bottom: 6px;"><p style="font-size: 20px;">Email</p></div>
+        <input class="input" id="email_input" name="email_input" type="text" placeholder="Email">
+        <p class="invalid_email" id="invalid_email">Invalid email address.</p>
+      </div>
+      <div class="inputs">
+        <div style="margin-bottom: 6px;"><p style="font-size: 20px;">Password</p></div>
+        <div class="password-container">
+          <input class="input" id="password_input" name="password_input" type="password" placeholder="Password">
+          <span class="show-password" onclick="togglePasswordVisibility1()">
+            <img class="show-password-image" src="{{ url_for('static', filename='images/slash_eye.png') }}" id="showImg1" alt="Show" style="display: inline;">
+            <img class="show-password-image" src="{{ url_for('static', filename='images/normal_eye.png') }}" id="hideImg1" alt="Hide" style="display: none;">
+          </span>
+        </div>
+      </div>
+      <div class="inputs">
+        <div style="margin-bottom: 6px;"><p style="font-size: 20px;">Confirm Password</p></div>
+        <div class="password-container">
+          <input class="input" id="password_confirm_input" name="password_confirm_input" type="password" placeholder="Confirm Password">
+          <span class="show-password" onclick="togglePasswordVisibility2()">
+            <img class="show-password-image" src="{{ url_for('static', filename='images/slash_eye.png') }}" id="showImg2" alt="Show" style="display: inline;">
+            <img class="show-password-image" src="{{ url_for('static', filename='images/normal_eye.png') }}" id="hideImg2" alt="Hide" style="display: none;">
+          </span>
+        </div>
+        <p class="invalid_password" id="invalid_password">Password is not the same or is empty.</p>
+      </div>
+    </form>
+    <div class="inputs">
+      <div class="enter-box"></div>
+      <button class="enter-button" onclick="ValidateEmail()">Enter</button>
+      {% if message %}
+        <p class="invalid_user" id="user_message">{{ message }}</p>
+      {% endif %}
+      </div>
+    </div>
+    
+    <script>
+      function ValidateEmail() {
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*.com$/;
+        
+        clearMessage("user_message");
+
+        if ((document.getElementById('email_input')).value.match(validRegex)) {
+          showEmailMessage(true);
+          return true;
+      
+        } else {
+          showEmailMessage(false);
+          return false;
+        }
+      }
+
+      function showEmailMessage(input) {
+        var email_i = document.getElementById('invalid_email');
+        var pass_i = document.getElementById('invalid_password');
+
+        email_i.style.display = 'none';
+        pass_i.style.display = 'none';
+      
+        if (input === true) {
+          passwordChecker();
+        }
+        else {
+          email_i.style.display = 'block';
+        }
+      }
+
+      function passwordChecker() {
+        var password = document.getElementById("password_input").value;
+        var passwordConfirm = document.getElementById("password_confirm_input").value;
+
+        if (password && passwordConfirm) {
+          if (password === passwordConfirm) {
+            document.getElementById("loginForm").submit();
+          }
+          else {
+            var pass_i = document.getElementById('invalid_password');
+            pass_i.style.display = 'block';
+          }
+        }
+        else {
+          var pass_i = document.getElementById('invalid_password');
+          pass_i.style.display = 'block';
+        }
+      }
+
+      function clearMessage(id) {
+        var messageElement = document.getElementById(id);
+        if (messageElement) {
+          messageElement.innerText = "";
+        }
+      }
+
+      function togglePasswordVisibility1() {
+        var passwordField = document.getElementById('password_input');
+        var showImg = document.getElementById('showImg1');
+        var hideImg = document.getElementById('hideImg1');
+  
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          showImg.style.display = 'none';
+          hideImg.style.display = 'inline';
+        } else {
+          passwordField.type = 'password';
+          showImg.style.display = 'inline';
+          hideImg.style.display = 'none';
+        }
+      }
+
+      function togglePasswordVisibility2() {
+        var passwordField = document.getElementById('password_confirm_input');
+        var showImg = document.getElementById('showImg2');
+        var hideImg = document.getElementById('hideImg2');
+  
+        if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          showImg.style.display = 'none';
+          hideImg.style.display = 'inline';
+        } else {
+          passwordField.type = 'password';
+          showImg.style.display = 'inline';
+          hideImg.style.display = 'none';
+        }
+      }
+    </script>
+</body>
+
+</html>
