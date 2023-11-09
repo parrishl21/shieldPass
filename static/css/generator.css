@@ -129,14 +129,7 @@ table {
     box-sizing: border-box;
     padding: 8px;
     vertical-align: middle;
-    border: 3px solid #0DBC62;
-    border-radius: 5px;
 }
-
-.generator-checkbox:unchecked {
-    background: black;
-}
-
 .generator-checkbox:checked {
     background: #0DBC62;
     background-color: #0DBC62;
