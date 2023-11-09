@@ -14,6 +14,7 @@ function copyText(inputId) {
 }
 
 function generatePassword() {
+    event.preventDefault();
     let length = getElementById("generator-length-text").value;
     let pwd = new String("");
     for (let i = 0; i < length; i++) {
