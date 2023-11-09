@@ -12,3 +12,12 @@ function copyText(inputId) {
         document.getElementById(inputId).nextElementSibling.innerHTML = originalHtml; // Revert back to clone
     }, 1000); // Revert after 1 second(s)
 }
+
+function generatePassword() {
+    let length = getElementById("generator-length-text").value;
+    let pwd = new String("");
+    for (let i = 0; i < length; i++) {
+        pwd += '0';
+    }
+    document.getElementById("generator-output").value = 100;
+}

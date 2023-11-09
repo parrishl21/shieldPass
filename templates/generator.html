@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/generator.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage_left.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-... " crossorigin="anonymous">
-    <script src="{{ url_for('static', filename='js/login_homepage.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/generator.js') }}"></script>
 </head>
 
 <body>
@@ -58,8 +58,8 @@
             <div id="myModal" class="modal">
                 <div class="modal-content">
                     <div class="input-with-button">
-                        <input class="generator-output" id="generated-password" name="generated-password" type="text" placeholder="Password" readonly>
-                        <button class="copy-button" onclick="copyText('generated-password')">
+                        <input class="generator-output" id="generator-output" name="generator-output" type="text" placeholder="Password" readonly>
+                        <button class="generate-button" onclick="copyText('generator-output')">
                             <i class="far fa-clone" style="color: #4CAF50;"></i> 
                         </button>
                     </div>
@@ -77,7 +77,7 @@
                         <input class="generator-checkbox" id="generator-symbols" name="generator-symbols" type="checkbox" value="True">
                         <label class="generator-text" for="generator-symbols">Include Symbols</label></br>
                     </div>
-                    <button class="generate-button" onclick="ValidateEmail()">Generate</button>
+                    <button class="generate-button" onclick="generatePassword()">Generate</button>
                 </div>
             </div>
         </form>
