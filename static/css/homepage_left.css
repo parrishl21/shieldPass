@@ -1,0 +1,148 @@
+.left_rectangle {
+    width: 25%;
+    height: 100%;
+    background-color: #121212;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+/* .right_rectangle {
+    width: 1%;
+    height: 50%;
+    background-color: #0DBC62;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    right: 0;
+} */
+.input-container {
+    display: flex;
+    justify-content: flex-start;
+}
+.inputs {
+    margin: 30px;
+}
+.parent {
+    display: flex;
+    align-items: center;
+    padding-top: 14px;
+    margin-left: 25px;
+    
+}
+.search-input{
+    width: 220px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 75px 75px 75px 75px;
+    color: black;
+    font-size: 15px;
+    text-indent: 20px;
+    margin-top: 20px;
+    margin-left: -20px;
+}
+.sign-out-button {
+    width: 200px;
+    height: 40px;
+    background-color: transparent ;
+    border-radius: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 0;
+}
+.sign-out-box {
+    width: 220px;
+    height:40px;
+    background-color: #02ff7c;
+    border-radius: 5px;
+}
+.sign-out-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    bottom: 20px;
+}
+.shieldPass-text {
+    color: #0DBC62;
+    text-align: center;
+    font-size: 23px;
+    margin-top: 25px;
+    
+}
+.settings-text,
+.button-text {
+    font-size: 25px;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+.all-button {
+    position: absolute; 
+    width: 250px;
+    height: 70px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 80px 80px 80px 80px;
+    bottom: -20px;
+    border: 0;
+
+}
+
+.button-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+}
+.settings-button{
+    position: absolute; 
+    width: 250px;
+    height: 40px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 80px 80px 80px 80px;
+    top: -5px;
+    border: 0;
+}
+
+.settings-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    bottom: 10px;
+}
+
+#button-icon {
+    color: white;
+    position: absolute;
+    left: 10%;
+    margin-top: 3px;
+    font-size: 24px;
+}
+#search-icon {
+    color: grey;
+    position: absolute;
+    left: 20%;
+    margin-top: 75px;
+    font-size: 24px;
+  }
+.icon-button {
+    display: flex;
+    flex-direction: row;
+    width: 280px;
+}
+#searchInput {
+    text-indent: 40px; 
+  }
+#sign-out {
+    font-size: 20px;
+}

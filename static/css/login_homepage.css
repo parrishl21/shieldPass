@@ -58,7 +58,7 @@ table {
     font-size: 18px;
     text-transform: capitalize
 }
-.left_rectangle {
+/* .left_rectangle {
     width: 25%;
     height: 100%;
     background-color: #121212;
@@ -68,7 +68,7 @@ table {
     position: absolute;
     top: 0;
     left: 0;
-}
+} */
 .logo-img {
     max-width: 70px;
     max-height: 70px;
@@ -76,16 +76,6 @@ table {
     height: auto;
     object-fit: contain;
 }
-/* .right_rectangle {
-    width: 1%;
-    height: 100%;
-    background-color: #0DBC62;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 0;
-} */
 .add_password_button {
     position: fixed;
     bottom: 50px;
