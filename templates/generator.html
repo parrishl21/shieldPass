@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/generator.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage_left.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-... " crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/login_homepage.js') }}"></script>
+</head>
+
+<body>
+    <div class="left_rectangle" id="fixed-section">
+        <p class="shieldPass-text">ShieldPass</p>
+        <i class="fas fa-search" id="search-icon"></i>
+        <input class="search-input" id="searchInput" onkeyup="searchDatabase()" type="text" placeholder="Search"> 
+        <div class="button-container">
+            <div class="icon-button">
+                <i class="fas fa-lock" id="button-icon"></i>
+            </div>
+            <p class="button-text">Login</p>
+            <button class="all-button"></button>
+        </div> 
+        <div class="button-container">
+            <div class="icon-button">
+                <i class="far fa-sticky-note" id="button-icon"></i>
+            </div>
+            <p class="button-text">Notes</p>
+            <button class="all-button"></button>
+        </div>
+        <div class="button-container">
+            <div class="icon-button">
+                <i class="fas fa-sync-alt" id="button-icon"></i>
+            </div>
+            <p class="button-text">Generator</p>
+            <button class="all-button"></button>
+        </div>
+        <div style="position: absolute; bottom: 0; margin-bottom: 30px;">
+            <div class="settings-container" style="margin-bottom: 30px;">
+                <div class="icon-button">
+                    <i class="fas fa-info-circle" id="button-icon"></i>
+                </div>
+                <p class="settings-text">Settings</p>
+                <button class="settings-button"></button>
+            </div>
+            <div class="sign-out-container">
+                <div class="sign-out-box">
+                    <button class="sign-out-button" onclick="window.location.href='/logout'">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content" id="scrollable-section">
+        <h1 style="margin-top: 50px; margin-bottom: 25px; margin-left: 20px;">Generator</h1>
+
+        <form id="generatorForm" action="/login_homepage" method="post">
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="input-with-button">
+                        <input class="generator-input" id="generated-password" name="generated-password" type="text" placeholder="Password" readonly>
+                        <button class="copy-button" onclick="copyText('generated-password')">
+                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                        </button>
+                    </div>
+                    <p class="generator-text" id="generator-length-text" style="justify-content: space-between; display: flex;">Password Length 10</p>
+                    <input class="slider" id="generator-length" name="new-website" type="range" min="10" max="30" value="15"></br>
+
+                    <input class="generator-checkbox" id="generator-uppercase" name="generator-uppercase" type="checkbox">
+                    <label class="generator-text" for="generator-uppercase">Include Uppercase Letters</label></br>
+
+                    <input class="generator-checkbox" id="generator-numbers" name="generator-numbers" type="checkbox">
+                    <label class="generator-text" for="generator-numbers">Include Numbers</label></br>
+
+                    <input class="generator-checkbox" id="generator-symbols" name="generator-symbols" type="checkbox">
+                    <label class="generator-text" for="generator-symbols">Include Symbols</label></br>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
