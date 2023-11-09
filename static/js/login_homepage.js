@@ -115,6 +115,8 @@ function closeModalConform() {
     document.getElementById("modal-confirm").style.display = "none";
 }
 function closeModalView() {
+    makeReadOnly();
+    showCloneIcons();
     document.getElementById("myModal_view").style.display = "none";
     document.getElementById("new-website-view").value = "";
     document.getElementById("new-email-view").value = "";
