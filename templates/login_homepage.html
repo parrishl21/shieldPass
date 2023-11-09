@@ -6,16 +6,54 @@
     <title>Homepage</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_homepage.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage_left.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-... " crossorigin="anonymous">
     <script src="{{ url_for('static', filename='js/login_homepage.js') }}"></script>
 </head>
 
 <body>
     <div class="left_rectangle" id="fixed-section">
-        <input id="searchInput" type="text" onkeyup="searchDatabase()" placeholder="Search" style="color: black;">
+        <p class="shieldPass-text">ShieldPass</p>
+        <i class="fas fa-search" id="search-icon"></i>
+        <input class="search-input" id="searchInput" onkeyup="searchDatabase()" type="text" placeholder="Search"> 
+        <div class="button-container">
+            <div class="icon-button">
+                <i class="fas fa-lock" id="button-icon"></i>
+            </div>
+            <p class="button-text">Login</p>
+            <button class="all-button"></button>
+        </div> 
+        <div class="button-container">
+            <div class="icon-button">
+                <i class="far fa-sticky-note" id="button-icon"></i>
+            </div>
+            <p class="button-text">Notes</p>
+            <button class="all-button"></button>
+        </div>
+        <div class="button-container">
+            <div class="icon-button">
+                <i class="fas fa-sync-alt" id="button-icon"></i>
+            </div>
+            <p class="button-text">Generator</p>
+            <button class="all-button"></button>
+        </div>
+        <div style="position: absolute; bottom: 0; margin-bottom: 30px;">
+            <div class="settings-container" style="margin-bottom: 30px;">
+                <div class="icon-button">
+                    <i class="fas fa-info-circle" id="button-icon"></i>
+                </div>
+                <p class="settings-text">Settings</p>
+                <button class="settings-button"></button>
+            </div>
+            <div class="sign-out-container">
+                <div class="sign-out-box">
+                    <button class="sign-out-button" onclick="window.location.href='/logout'">Sign Out</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="main-content" id="scrollable-section">
-        <h1 style="margin-top: 50px; margin-bottom: 25px; margin-left: 20px;">Logins</h1>
+        <h1 style="margin-top: 50px; margin-bottom: 25px; margin-left: 35px;">Logins</h1>
         <div class="filter-container">
             <button onclick="showButtons()" class="filter">
                 <span style="font-size: 32px;">≡</span> Filter
