@@ -11,37 +11,12 @@ table {
     border-collapse: collapse;
     margin: auto;
 }
-.left-column {
-    width: 5%;
-    text-align: center;
-}
-.right-column {
-    width: 95%;
-    font-size: 18px;
-    text-transform: capitalize
-}
-
-.logo-img {
-    max-width: 70px;
-    max-height: 70px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
 /* Styles for the modal overlay */
 .modal {
-    /* display: none; */
-    /* position: fixed; */ 
-    /* z-index: 1; */
     left: 0;
     top: 0;
     width: 100%; 
     height: 100%; 
-    /* overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.8); 
-    overflow: hidden; */
 }
   /* Styles for the modal content */
 .modal-content {
@@ -50,54 +25,9 @@ table {
     padding: 30px;
     border: 1px solid #2F2F2F;
     width: 500px;
-    height: 600px;
-    /* display: flex; */
+    height: 540;
     flex-direction: column;
     position: relative;
-}
-  /* Style for the close button */
-.close {
-    color: #aaaaaa;
-    right: 10px;
-    top: 0;
-    font-size: 38px;
-    position: absolute;
-    font-weight: bold;
-}
-.close:hover,
-.close:focus {
-    color: #6e6e6e;
-    text-decoration: none;
-    cursor: pointer;
-}
-.modal-confirm {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.8); 
-    overflow: hidden;
-}
-  /* Styles for the modal content */
-.modal-confirm-content {
-    background-color: #121212;
-    margin: 10% auto; 
-    padding: 30px;
-    border: 1px solid #2F2F2F;
-    width: 350px;
-    height: 175px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-.confirm-modal-text {
-    margin-bottom: 10px;
-    font-size: 21px;
-    text-align: center;
 }
 .generator-text {
     margin-top: 40px;
@@ -105,7 +35,7 @@ table {
     font-size: 21px;
     vertical-align: middle;
 }
-.generator-input {
+.generator-output {
     margin-bottom: 10px;
     height: 65px;
     border-radius: 10px;
@@ -135,6 +65,10 @@ table {
     background-color: #0DBC62;
     accent-color: #0DBC62;
 }
+.checkbox-div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .slider {
     -webkit-appearance: none;
     width: 100%;
@@ -143,13 +77,15 @@ table {
     outline: none;
     border: 3px solid #0DBC62;
     border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #0DBC62; /* Green background */
+    width: 25px;
+    height: 25px;
+    background: #0DBC62;
     cursor: pointer;
     border: 5px solid #0DBC62;
     border-radius: 20px;
@@ -173,22 +109,15 @@ table {
 .slider::-moz-range-track {
     cursor: pointer;
 }
-.new-password-button {
+.generate-button {
     background-color: #0DBC62;
     height: 80px;
     cursor: pointer;
     border: none;
     font-size: 25px;
-    margin-top: 15px;
+    margin-top: 40px;
     margin-right: 10px;
-}
-.edit-save-delete-container {
-    display: flex;
-    justify-content: flex-start;
     width: 100%;
-}
-.input-with-button {
-    position: relative;
 }
 .copy-button {
     position: absolute;
@@ -209,8 +138,7 @@ table {
 }
 #scrollable-section {
     width: 75%;
-    /* height: 100vh; */
+    height: 100vh;
     overflow-y: auto;
     margin-left: 25%;
-    /* background-color: #e6e6e6; */
 }
