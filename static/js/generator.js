@@ -13,12 +13,38 @@ function copyText(inputId) {
     }, 1000); // Revert after 1 second(s)
 }
 
+function updateLength() {
+    let length = document.getElementById("generator-length").value;
+    let str = "Password Length " + length;
+    document.getElementById("generator-length-text").innerHTML = str;
+    generatePassword();
+
+}
+
 function generatePassword() {
     event.preventDefault();
-    let length = getElementById("generator-length-text").value;
-    let pwd = new String("");
-    for (let i = 0; i < length; i++) {
-        pwd += '0';
+    let masterArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    let uppercaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    let numbersArray = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+    let symbolsArray = ["!", "@", "#", "$", "%", "^", "&", "*", "-", "_", "=", "+", ".", "?", "/"];
+
+    if (document.getElementById("generator-uppercase").checked) {
+        masterArray.push(...uppercaseArray);
     }
-    document.getElementById("generator-output").value = 100;
+
+    if (document.getElementById("generator-numbers").checked) {
+        masterArray.push(...numbersArray);
+    }
+
+    if (document.getElementById("generator-symbols").checked) {
+        masterArray.push(...symbolsArray);
+    }
+    let length = parseInt(document.getElementById("generator-length").value, 10);
+    let pwd = [];
+    for (let i = 0; i < length; i++) {
+        r = Math.floor(Math.random() * masterArray.length);
+        pwd.push(masterArray[r]);
+    }
+
+    document.getElementById("generator-output").value = pwd.join("");
 }

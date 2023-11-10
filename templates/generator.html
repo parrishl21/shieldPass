@@ -11,7 +11,7 @@
     <script src="{{ url_for('static', filename='js/generator.js') }}"></script>
 </head>
 
-<body>
+<body onload="updateLength()">
     <div class="left_rectangle" id="fixed-section">
         <p class="shieldPass-text">ShieldPass</p>
         <i class="fas fa-search" id="search-icon"></i>
@@ -59,22 +59,22 @@
                 <div class="modal-content">
                     <div class="input-with-button">
                         <input class="generator-output" id="generator-output" name="generator-output" type="text" placeholder="Password" readonly>
-                        <button class="generate-button" onclick="copyText('generator-output')">
+                        <button class="copy-button" onclick="copyText('generator-output')">
                             <i class="far fa-clone" style="color: #4CAF50;"></i> 
                         </button>
                     </div>
                     <div class="checkbox-div">
-                        <p class="generator-text" id="generator-length-text" style="justify-content: space-between; display: flex;">Password Length 10</p>
-                        <input class="slider" id="generator-length" name="new-website" type="range" min="10" max="30" value="16"></br>
+                        <p class="generator-text" id="generator-length-text" style="justify-content: space-between; display: flex;">Password Length 16</p>
+                        <input class="slider" id="generator-length" name="new-website" type="range" min="10" max="30" value="16" onclick="updateLength()"></br>
                     </div>
                     <div class="checkbox-div">
-                        <input class="generator-checkbox" id="generator-uppercase" name="generator-uppercase" type="checkbox" value="True" checked>
+                        <input class="generator-checkbox" id="generator-uppercase" name="generator-uppercase" type="checkbox" onchange="generatePassword()" checked>
                         <label class="generator-text" for="generator-uppercase">Include Uppercase Letters</label></br>
                     </div class="checkbox-div">
-                        <input class="generator-checkbox" id="generator-numbers" name="generator-numbers" type="checkbox" value="True" checked>
+                        <input class="generator-checkbox" id="generator-numbers" name="generator-numbers" type="checkbox" onchange="generatePassword()" checked>
                         <label class="generator-text" for="generator-numbers">Include Numbers</label></br>
                     <div class="checkbox-div">
-                        <input class="generator-checkbox" id="generator-symbols" name="generator-symbols" type="checkbox" value="True">
+                        <input class="generator-checkbox" id="generator-symbols" name="generator-symbols" onchange="generatePassword()" type="checkbox">
                         <label class="generator-text" for="generator-symbols">Include Symbols</label></br>
                     </div>
                     <button class="generate-button" onclick="generatePassword()">Generate</button>
