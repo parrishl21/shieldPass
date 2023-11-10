@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/generator.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage_left.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-... " crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">
     <script src="{{ url_for('static', filename='js/generator.js') }}"></script>
 </head>
 
@@ -64,8 +65,8 @@
                         </button>
                     </div>
                     <div class="checkbox-div">
-                        <p class="generator-text" id="generator-length-text" style="justify-content: space-between; display: flex;">Password Length 16</p>
-                        <input class="slider" id="generator-length" name="new-website" type="range" min="10" max="30" value="16" onclick="updateLength()"></br>
+                        <p class="generator-text" id="generator-length-text">Password Length: <b>16</b></p>
+                        <input class="slider" id="generator-length" name="new-website" type="range" min="10" max="30" value="16" oninput="updateLength()"></br>
                     </div>
                     <div class="checkbox-div">
                         <input class="generator-checkbox" id="generator-uppercase" name="generator-uppercase" type="checkbox" onchange="generatePassword()" checked>

@@ -12,6 +12,10 @@ table {
     margin: auto;
 }
 
+b {
+    color: #0DBC62;
+}
+
 .logo-img {
     max-width: 70px;
     max-height: 70px;
@@ -34,7 +38,7 @@ table {
     padding: 30px;
     border: 1px solid #2F2F2F;
     width: 500px;
-    height: 540px;
+    height: 510px;
     /* display: flex; */
     flex-direction: column;
     position: relative;
@@ -157,4 +161,8 @@ table {
     width: 75%;
     overflow-y: auto;
     margin-left: 25%;
+}
+#generator-output {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 24px;
 }

@@ -15,7 +15,7 @@ function copyText(inputId) {
 
 function updateLength() {
     let length = document.getElementById("generator-length").value;
-    let str = "Password Length " + length;
+    let str = 'Password Length: <b>' + length + '</b>';
     document.getElementById("generator-length-text").innerHTML = str;
     generatePassword();
 
