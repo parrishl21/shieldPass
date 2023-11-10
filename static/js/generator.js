@@ -14,7 +14,10 @@ function copyText(inputId) {
 }
 
 function updateLength() {
-    let length = document.getElementById("generator-length").value;
+    let slider = document.getElementById("generator-length");
+    let length = slider.value;
+    var value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+    slider.style.background = 'linear-gradient(to right, #0DBC62 0%, #0DBC62 ' + value + '%, white ' + value + '%, white 100%)';
     let str = 'Password Length: <b>' + length + '</b>';
     document.getElementById("generator-length-text").innerHTML = str;
     generatePassword();
