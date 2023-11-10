@@ -90,7 +90,7 @@ b {
     -webkit-appearance: none;
     width: 100%;
     height: 5px;
-    background: white;
+    background: linear-gradient(to right, #0DBC62 0%, #0DBC62 50%, white 50%, white 100%);
     outline: none;
     border: 3px solid #0DBC62;
     border-radius: 20px;
