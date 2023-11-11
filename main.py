@@ -273,6 +273,26 @@ def search():
 
     return jsonify(sql_table)
 
+@app.route('/notes_homepage', methods=['GET', 'POST'])
+@login_required
+def notes_homepage():
+    user_id = session.get('_user_id')
+    
+    cursor.execute("SELECT nid, note_name FROM notes WHERE uid = %s ORDER BY note_name;", (user_id,))
+    record = cursor.fetchall()
+    ids = [records[0] for records in record]
+    sql_table = [item[1] for item in record]
+    return render_template('notes_homepage.html', sql_table=zip(ids, sql_table))
+
+@app.route('/get_note_info/<int:note_id>', methods=['GET'])
+def get_note_info(note_id):
+    cursor.execute("SELECT note_name, note FROM notes WHERE nid = %s;", (note_id,))
+    record = cursor.fetchone()
+    if record:
+        return jsonify({'note_name': record[0], 'note': record[1]})
+    else:
+        return jsonify({'error': 'Login information not found'})
+
 @app.route('/homepage')
 @login_required
 def homepage():
