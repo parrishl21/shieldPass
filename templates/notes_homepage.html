@@ -35,7 +35,7 @@
                 <i class="fas fa-sync-alt" id="button-icon"></i>
             </div>
             <p class="button-text">Generator</p>
-            <button class="all-button"></button>
+            <button class="all-button" onclick="window.location.href='/generator'"></button>
         </div>
         <div style="position: absolute; bottom: 0; margin-bottom: 30px;">
             <div class="settings-container" style="margin-bottom: 30px;">
@@ -62,27 +62,43 @@
             </div>
             {% endfor %}
         </div>
+        <button onclick="openModal()" class="add_note_button"></button>
+        <form id="noteForm" action="/notes_homepage" method="post">
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <p class="note-name-text-add">Name</p>
+                    <input class="note-name-input-add" id="note-name-add" name="note-name-add" type="text" placeholder="Note Name">
+                    <p class="note-name-text-add">Note</p>
+                    <textarea class="note-name-input-long-add" id="note-add" name="note-add" type="text" placeholder="Note"></textarea>
+                    <button class="new-note-button" onclick="checkInputs()">Add</button>
+                    <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
+                </div>
+            </div>
+        </form>
         <div id="myModal_view" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModalView()">&times;</span>
-                <input class="note-name-input-long" id="note-view" name="note-view" type="text" placeholder="Note" readonly>
-                <!-- <div class="edit-save-delete-container">
-                    <button class="new-password-button edit-button" onclick="makeEditable()">Edit</button>
-                    <button class="new-password-button delete-button" onclick="openConfirmModal()" style="display: none;">Delete</button>
-                    <button class="new-password-button save-button" onclick="saveChanges()" style="display: none;">Save</button>
+                <p class="note-name-text">Name</p>
+                <input class="note-name-input" id="note-name-view" name="note-name-view" type="text" readonly>
+                <p class="note-name-text">Note</p>
+                <textarea class="note-name-input-long" id="note-view" name="note-view" type="text" readonly></textarea>
+                <div class="edit-save-delete-container">
+                    <button class="new-note-button edit-button" onclick="makeEditable()">Edit</button>
+                    <button class="new-note-button delete-button" onclick="openConfirmModal()" style="display: none;">Delete</button>
+                    <button class="new-note-button save-button" onclick="checkInputsSave()" style="display: none;">Save</button>
                 </div>
-                <p class="invalid_email" id="invalid_email">Invalid email address.</p>
-                <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
-                <div id="modal-confirm" class="modal-confirm">
-                    <div id="modal-confirm-content" class="modal-confirm-content">
-                        <p class="confirm-modal-text">Are you sure you want to</p>
-                        <p class="confirm-modal-text" style="margin-bottom: 20px;">delete this login?</p>
-                        <div class="edit-save-delete-container">
-                            <button class="new-password-button delete-button" onclick="deleteEntry()">Delete</button>
-                            <button class="new-password-button save-button" onclick="closeModalConform()">Cancel</button>
-                        </div>
+                <p class="invalid_email" id="invalid_inputs_view">Please fill out all inputs.</p>
+            </div>
+            <div id="modal-confirm" class="modal-confirm">
+                <div id="modal-confirm-content" class="modal-confirm-content">
+                    <p class="confirm-modal-text">Are you sure you want to</p>
+                    <p class="confirm-modal-text" style="margin-bottom: 20px;">delete this note?</p>
+                    <div class="edit-save-delete-container">
+                        <button class="new-note-button delete-button" onclick="deleteEntry()">Delete</button>
+                        <button class="new-note-button save-button" onclick="closeModalConform()">Cancel</button>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>

@@ -256,12 +256,41 @@ def save_changes():
 
         return jsonify({'message': 'Data updated in the database.'})
     
+@app.route('/save_changes_notes', methods=['POST'])
+def save_changes_notes():
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        # Extract the data from the JSON request
+        nid = data['nid']
+        note_name = data['note_name']
+        note = data['note']
+        
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Update the data in the PostgreSQL database
+        cursor.execute("UPDATE notes SET note_name = %s, note = %s, updated_at = %s WHERE nid = %s", (note_name, note, current_time, nid))
+        conn.commit()
+
+        return jsonify({'message': 'Data updated in the database.'})
+    
 @app.route('/delete_row', methods=['POST'])
 def delete_row():
     data = request.get_json()
     if data and 'row_id' in data:
         row_id = data['row_id']
-        cursor.execute("DELETE FROM login WHERE lid = %s", (row_id,))
+        cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
+        conn.commit()
+        return jsonify({'message': 'Row deleted successfully.'})
+    else:
+        return jsonify({'message': 'Invalid data format.'}), 400
+    
+@app.route('/delete_row_note', methods=['POST'])
+def delete_row_note():
+    data = request.get_json()
+    if data and 'row_id' in data:
+        row_id = data['row_id']
+        cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
         conn.commit()
         return jsonify({'message': 'Row deleted successfully.'})
     else:
@@ -282,6 +311,14 @@ def search():
 @login_required
 def notes_homepage():
     user_id = session.get('_user_id')
+    
+    if request.method == 'POST':
+        note_name = request.form['note-name-add']
+        note = request.form['note-add']
+        
+        cursor.execute('INSERT INTO notes (uid, note_name, note) VALUES (%s, %s, %s);', (user_id, note_name, note))
+        conn.commit()
+        return redirect(url_for('notes_homepage'))
     
     cursor.execute("SELECT nid, note_name FROM notes WHERE uid = %s ORDER BY note_name;", (user_id,))
     record = cursor.fetchall()
