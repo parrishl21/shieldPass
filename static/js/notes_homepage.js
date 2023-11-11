@@ -31,16 +31,17 @@ function closeModalView() {
     document.querySelector('.delete-button').style.display = 'none';
     var inputs_i = document.getElementById('invalid_inputs_view');
     inputs_i.style.display = 'none';
-    extInput = document.querySelectorAll('.note-name-text');
+    textInput = document.querySelectorAll('.note-name-text');
     textInput.forEach(function(input) {
         input.style.display = 'none';
     });
     document.querySelector('.note-name-input').style.display = 'none';
     makeReadOnly();
+    location.reload();
 }
 function searchDatabase() {
     var inputText = document.getElementById('searchInput').value;
-    fetch('/search', {
+    fetch('/search_notes', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -49,7 +50,7 @@ function searchDatabase() {
     })
     .then(response => response.json())
     .then(data => {
-        updateTable(data);
+        updateNote(data);
     })
     .catch(error => {
         console.error('Error:', error);
@@ -198,5 +199,33 @@ function checkInputsSave() {
         saveChanges();
     } else {
         inputs_i.style.display = 'block';
+    }
+}
+function updateNote(data) {
+    var noteContainer = document.querySelector('.notes-container');
+    noteContainer.innerHTML = '';
+
+    for (var i = 0; i < data.length; i++) {
+        var noteId = data[i][0];
+        var noteName = data[i][1];
+
+        // Create the HTML elements for each note
+        var noteBox = document.createElement('div');
+        noteBox.className = 'note-box';
+        noteBox.setAttribute('onclick', 'fetchNoteInfo(' + noteId + ')');
+
+        var boxLeftRectangle = document.createElement('div');
+        boxLeftRectangle.className = 'box-left-rectangle';
+
+        var noteNameParagraph = document.createElement('p');
+        noteNameParagraph.className = 'note-name note-name-' + noteId;
+        noteNameParagraph.innerHTML = noteName;
+
+        // Append the elements to the noteBox
+        noteBox.appendChild(boxLeftRectangle);
+        noteBox.appendChild(noteNameParagraph);
+
+        // Append the noteBox to the notesContainer
+        noteContainer.appendChild(noteBox);
     }
 }

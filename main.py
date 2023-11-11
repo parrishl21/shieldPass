@@ -307,6 +307,17 @@ def search():
 
     return jsonify(sql_table)
 
+@app.route('/search_notes', methods=['POST'])
+def search_notes():
+    data = request.get_json()
+    query = data['query']
+
+    cursor.execute("SELECT nid, note_name FROM notes WHERE note_name ILIKE %s ORDER BY note_name;", ('%' + query + '%',))
+    record = cursor.fetchall()
+    sql_table = [(item[0], item[1]) for item in record]
+
+    return jsonify(sql_table)
+
 @app.route('/notes_homepage', methods=['GET', 'POST'])
 @login_required
 def notes_homepage():

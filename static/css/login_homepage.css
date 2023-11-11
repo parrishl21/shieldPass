@@ -75,6 +75,7 @@ table {
     width: auto;
     height: auto;
     object-fit: contain;
+    border-radius: 30px;
 }
 .add_password_button {
     position: fixed;
@@ -172,6 +173,14 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     font-size: 21px;
 }
 .new-password-input {
+    margin-bottom: 20px;
+    height: 65px;
+    border-radius: 10px;
+    text-indent: 15px;
+    font-size: 20px;
+    color: black;
+}
+.add-password-input {
     margin-bottom: 20px;
     height: 65px;
     border-radius: 10px;

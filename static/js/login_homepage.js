@@ -13,6 +13,7 @@ function showButtons() {
     }
 }
 function changeColor(buttonName) {
+    clearSearch();
     currentSelectedButtonName = buttonName;
     var buttons = document.getElementsByClassName('filter-show-buttons');
     for (var i = 0; i < buttons.length; i++) {
@@ -93,10 +94,29 @@ function updateTable(data) {
         var row = table.insertRow(-1); // Insert at the end of the table
         var cell1 = row.insertCell(0);
         var cell2 = row.insertCell(1);
-        cell1.innerHTML = '<img class="logo-img" src="https://logo.clearbit.com/' + data[i][1] + '.com?size=45" alt="No Logo">';
         cell1.classList.add('left-column');
-        cell2.innerHTML = data[i][1];
         cell2.classList.add('right-column');
+
+        // Check if the Clearbit image URL is valid
+        var logoSrc = 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45';
+
+        // Create a closure to capture the values for this iteration
+        (function (src, cell) {
+            var img = new Image();
+            img.src = src;
+
+            img.onerror = function () {
+                // If image fails to load, use a default image URL
+                cell.innerHTML = '<img class="logo-img" src="https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found" alt="No Logo">';
+            };
+
+            // If the image loads successfully, use the Clearbit image
+            img.onload = function () {
+                cell.innerHTML = '<img class="logo-img" src="' + src + '" alt="No Logo">';
+            };
+        })(logoSrc, cell1);
+
+        cell2.innerHTML = data[i][1];
         row.setAttribute('onclick', 'fetchLoginInfo(' + data[i][0] + ')');
     }
 }
@@ -125,6 +145,7 @@ function closeModalView() {
     document.querySelector('.save-button').style.display = 'none';
     document.querySelector('.edit-button').style.display = 'inline-block';
     document.querySelector('.delete-button').style.display = 'none';
+    location.reload();
 }
 function closeModal() {
     var email_i = document.getElementById('invalid_email');
@@ -323,7 +344,14 @@ function deleteEntry() {
     });
 }
 function searchDatabase() {
+    clearFilterColors();
     var inputText = document.getElementById('searchInput').value;
+
+    if (inputText.trim() === '') {
+        changeColor('A-Z');
+        return;
+    }
+
     fetch('/search', {
         method: 'POST',
         headers: {
@@ -339,7 +367,16 @@ function searchDatabase() {
         console.error('Error:', error);
     });
 }
+function clearFilterColors() {
+    var buttons = document.getElementsByClassName('filter-show-buttons');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].style.color = 'white';
+    }
+}
+function clearSearch() {
+    document.getElementById('searchInput').value = '';
+}
 function replaceWithErrorImage(image) {
-    image.onerror = null; // to avoid infinite loops in case the replacement image is also missing
-    image.src = "https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found"; // Replace with the URL of your placeholder image
+    image.onerror = null;
+    image.src = "https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found";
 }
