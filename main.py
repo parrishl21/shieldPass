@@ -212,6 +212,11 @@ def login_homepage():
         sql_table = [(item[1],) for item in record]
         return render_template('login_homepage.html', sql_table=zip(ids, sql_table))
 
+@app.route('/generator')
+@login_required
+def generator():
+    return render_template('generator.html')
+
 @app.route('/update_row/<int:row_id>', methods=['PUT'])
 def update_row(row_id):
     if request.method == 'PUT':
