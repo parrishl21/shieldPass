@@ -256,12 +256,41 @@ def save_changes():
 
         return jsonify({'message': 'Data updated in the database.'})
     
+@app.route('/save_changes_notes', methods=['POST'])
+def save_changes_notes():
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        # Extract the data from the JSON request
+        nid = data['nid']
+        note_name = data['note_name']
+        note = data['note']
+        
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Update the data in the PostgreSQL database
+        cursor.execute("UPDATE notes SET note_name = %s, note = %s, updated_at = %s WHERE nid = %s", (note_name, note, current_time, nid))
+        conn.commit()
+
+        return jsonify({'message': 'Data updated in the database.'})
+    
 @app.route('/delete_row', methods=['POST'])
 def delete_row():
     data = request.get_json()
     if data and 'row_id' in data:
         row_id = data['row_id']
-        cursor.execute("DELETE FROM login WHERE lid = %s", (row_id,))
+        cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
+        conn.commit()
+        return jsonify({'message': 'Row deleted successfully.'})
+    else:
+        return jsonify({'message': 'Invalid data format.'}), 400
+    
+@app.route('/delete_row_note', methods=['POST'])
+def delete_row_note():
+    data = request.get_json()
+    if data and 'row_id' in data:
+        row_id = data['row_id']
+        cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
         conn.commit()
         return jsonify({'message': 'Row deleted successfully.'})
     else:
@@ -277,6 +306,34 @@ def search():
     sql_table = [(item[0], item[1]) for item in record]
 
     return jsonify(sql_table)
+
+@app.route('/notes_homepage', methods=['GET', 'POST'])
+@login_required
+def notes_homepage():
+    user_id = session.get('_user_id')
+    
+    if request.method == 'POST':
+        note_name = request.form['note-name-add']
+        note = request.form['note-add']
+        
+        cursor.execute('INSERT INTO notes (uid, note_name, note) VALUES (%s, %s, %s);', (user_id, note_name, note))
+        conn.commit()
+        return redirect(url_for('notes_homepage'))
+    
+    cursor.execute("SELECT nid, note_name FROM notes WHERE uid = %s ORDER BY note_name;", (user_id,))
+    record = cursor.fetchall()
+    ids = [records[0] for records in record]
+    sql_table = [item[1] for item in record]
+    return render_template('notes_homepage.html', sql_table=zip(ids, sql_table))
+
+@app.route('/get_note_info/<int:note_id>', methods=['GET'])
+def get_note_info(note_id):
+    cursor.execute("SELECT note_name, note FROM notes WHERE nid = %s;", (note_id,))
+    record = cursor.fetchone()
+    if record:
+        return jsonify({'note_name': record[0], 'note': record[1]})
+    else:
+        return jsonify({'error': 'Login information not found'})
 
 @app.route('/homepage')
 @login_required

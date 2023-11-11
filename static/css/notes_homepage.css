@@ -1,0 +1,242 @@
+.note-box {
+    width: 200px;
+    height: 45px;
+    /* border: 0; */
+    margin-left: 60px;
+    margin-bottom: 40px;
+    background-color: white;
+    /* display: inline-block; */
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+.notes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 80px;
+}
+.box-left-rectangle {
+    height: 100%;
+    width: 10%;
+    background-color: #11E779;
+}
+.add_note_button {
+    position: fixed;
+    bottom: 50px;
+    right: 100px;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 100px;
+  }
+.add_note_button:hover {
+    background-color: #11E779;
+}
+.add_note_button::before {
+content: "+";
+transform: scale(0.7); /* Adjust the scale to make it thinner */
+}
+.invalid_email {
+    display: none;
+    color: red;
+    margin-top: 10px;
+}
+.note-name {
+    margin-left: 10px;
+    color: black;
+    font-size: 19px;
+}
+.note-name-text {
+    margin-bottom: 10px;
+    font-size: 21px;
+    display: none;
+}
+.note-name-text-add {
+    margin-bottom: 10px;
+    font-size: 21px;
+}
+.note-name-input {
+    margin-bottom: 20px;
+    height: 65px;
+    border-radius: 10px;
+    text-indent: 15px;
+    font-size: 20px;
+    color: black;
+    display: none;
+}
+.note-name-input-add {
+    margin-bottom: 20px;
+    height: 65px;
+    border-radius: 10px;
+    text-indent: 15px;
+    font-size: 20px;
+    color: black;
+}
+.note-name-input-long {
+    margin-bottom: 20px;
+    height: 525px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: black;
+    text-align: left;
+    resize: none; 
+    box-sizing: border-box;
+    padding: 10px;
+}
+.note-name-input-long-add {
+    margin-bottom: 20px;
+    height: 525px;
+    border-radius: 10px;
+    font-size: 20px;
+    color: black;
+    text-align: left;
+    resize: none; 
+    box-sizing: border-box;
+    padding: 10px;
+}
+.note-name-input-long::-webkit-scrollbar {
+    width: 12px;
+}
+.note-name-input-long::-webkit-scrollbar-track {
+    background: #3F3C3C;
+}
+.note-name-input-long::-webkit-scrollbar-thumb {
+    background: #0DBC62;
+}
+.note-name-input-long::-webkit-scrollbar-thumb:hover {
+    background: #11E779;
+}
+.new-note-button {
+    background-color: #0DBC62;
+    height: 80px;
+    cursor: pointer;
+    border: none;
+    font-size: 25px;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+.edit-save-delete-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+.edit-button {
+    flex-grow: 1;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+.save-button {
+    flex-grow: 0;
+    width: 50%; /* Adjust the width as needed */
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+.delete-button {
+    flex-grow: 0;
+    width: 50%; /* Adjust the width as needed */
+    background: none;
+    color: red;
+}
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.8); 
+}
+.modal-confirm {
+    display: none; 
+    position: fixed; 
+    z-index: 2; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.8); 
+}
+.modal-confirm-content {
+    background-color: #121212;
+    margin: 10% auto; 
+    margin-top: 20%;
+    padding: 30px;
+    border: 1px solid #2F2F2F;
+    width: 350px;
+    height: 175px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.confirm-modal-text {
+    margin-bottom: 10px;
+    font-size: 21px;
+    text-align: center;
+}
+/* .input-with-button {
+    position: relative;
+} */
+  /* Styles for the modal content */
+.modal-content {
+    background-color: #121212;
+    margin: 10% auto; 
+    padding: 30px;
+    border: 1px solid #2F2F2F;
+    width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+  /* Style for the close button */
+.close {
+    color: #aaaaaa;
+    right: 10px;
+    top: 0;
+    font-size: 38px;
+    position: absolute;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: #6e6e6e;
+    text-decoration: none;
+    cursor: pointer;
+}
+#fixed-section {
+    width: 25%;
+    height: 100vh;
+    position: fixed;
+    background-color: #121212;
+}
+#scrollable-section {
+    width: 75%;
+    height: 100vh;
+    overflow-y: auto;
+    margin-left: 25%;
+    /* background-color: #e6e6e6; */
+}
+/* Customize the scrollbar */
+#scrollable-section::-webkit-scrollbar {
+    width: 12px;
+}
+#scrollable-section::-webkit-scrollbar-track {
+    background: #3F3C3C;
+}
+#scrollable-section::-webkit-scrollbar-thumb {
+    background: #0DBC62;
+}
+#scrollable-section::-webkit-scrollbar-thumb:hover {
+    background: #11E779;
+}

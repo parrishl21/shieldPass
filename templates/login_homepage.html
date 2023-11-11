@@ -21,21 +21,21 @@
                 <i class="fas fa-lock" id="button-icon"></i>
             </div>
             <p class="button-text">Login</p>
-            <button class="all-button"></button>
+            <button class="all-button" onclick="window.location.href='/login_homepage'"></button>
         </div> 
         <div class="button-container">
             <div class="icon-button">
                 <i class="far fa-sticky-note" id="button-icon"></i>
             </div>
             <p class="button-text">Notes</p>
-            <button class="all-button"></button>
+            <button class="all-button" onclick="window.location.href='/notes_homepage'"></button>
         </div>
         <div class="button-container">
             <div class="icon-button">
                 <i class="fas fa-sync-alt" id="button-icon"></i>
             </div>
             <p class="button-text">Generator</p>
-            <button class="all-button"></button>
+            <button class="all-button" onclick="window.location.href='/generator'"></button>
         </div>
         <div style="position: absolute; bottom: 0; margin-bottom: 30px;">
             <div class="settings-container" style="margin-bottom: 30px;">
@@ -130,14 +130,14 @@
                     </div>
                     <p class="invalid_email" id="invalid_email">Invalid email address.</p>
                     <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
-                    <div id="modal-confirm" class="modal-confirm">
-                        <div id="modal-confirm-content" class="modal-confirm-content">
-                            <p class="confirm-modal-text">Are you sure you want to</p>
-                            <p class="confirm-modal-text" style="margin-bottom: 20px;">delete this login?</p>
-                            <div class="edit-save-delete-container">
-                                <button class="new-password-button delete-button" onclick="deleteEntry()">Delete</button>
-                                <button class="new-password-button save-button" onclick="closeModalConform()">Cancel</button>
-                            </div>
+                </div>
+                <div id="modal-confirm" class="modal-confirm">
+                    <div id="modal-confirm-content" class="modal-confirm-content">
+                        <p class="confirm-modal-text">Are you sure you want to</p>
+                        <p class="confirm-modal-text" style="margin-bottom: 20px;">delete this login?</p>
+                        <div class="edit-save-delete-container">
+                            <button class="new-password-button delete-button" onclick="deleteEntry()">Delete</button>
+                            <button class="new-password-button save-button" onclick="closeModalConform()">Cancel</button>
                         </div>
                     </div>
                 </div>
