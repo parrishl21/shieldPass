@@ -73,7 +73,7 @@ def index():
             return redirect(url_for('two_factor'))
         else:
             message = "Invalid username or password. Please try again."
-            return render_template('log_in.html', message=message)
+            return render_template('log_in.html', message=message, email=db_email)
             
     return render_template('log_in.html')
 
