@@ -20,11 +20,11 @@
     <p class="enter-six-digit">Enter your six digit two factor authentication code</p>
     <form id="loginForm" action="/two_factor" method="post">
       <div class="two-factor-inputs">
-        <input class="number-input" type="text" maxlength="1" oninput="handleInput(0, this)" onclick="handleClick(this)" id="input0" name="input0">
-        <input class="number-input" type="text" maxlength="1" oninput="handleInput(1, this)" onclick="handleClick(this)" id="input1" name="input1">
-        <input class="number-input" type="text" maxlength="1" oninput="handleInput(2, this)" onclick="handleClick(this)" id="input2" name="input2">
-        <input class="number-input" type="text" maxlength="1" oninput="handleInput(3, this)" onclick="handleClick(this)" id="input3" name="input3">
-        <input class="number-input" type="text" maxlength="1" oninput="handleInput(4, this)" onclick="handleClick(this)" id="input4" name="input4">
+        <input class="number-input" type="text" maxlength="10" oninput="handleInput(0, this, event)" onclick="handleClick(this)" value="{{ input0 }}" id="input0" name="input0">
+        <input class="number-input" type="text" maxlength="10" oninput="handleInput(1, this, event)" onclick="handleClick(this)" value="{{ input1 }}" id="input1" name="input1">
+        <input class="number-input" type="text" maxlength="10" oninput="handleInput(2, this, event)" onclick="handleClick(this)" value="{{ input2 }}" id="input2" name="input2">
+        <input class="number-input" type="text" maxlength="10" oninput="handleInput(3, this, event)" onclick="handleClick(this)" value="{{ input3 }}" id="input3" name="input3">
+        <input class="number-input" type="text" maxlength="10" oninput="handleInput(4, this, event)" onclick="handleClick(this)" value="{{ input4 }}" id="input4" name="input4">
       </div>
     </form>
     <p class="invalid_code" id="invalid_code">Missing one or more numbers.</p>
@@ -40,8 +40,44 @@
   <script>
     let previousInput = '';
 
-    function handleInput(index, element) {
+    function handleInput(index, element, event) {
       const input = element.value;
+
+      if (event && (event.inputType === 'insertFromPaste' || event.type === 'paste')) {
+
+        for (let i = 0; i < 5; i++) {
+          const currentInput = document.getElementById('input' + i);
+          const value = '';
+
+          setTimeout(() => {
+            currentInput.value = value;
+          }, 0);
+        }
+
+        let pastedText = element.value;
+
+        const numbers = pastedText.split(' ');
+
+        for (let i = 0; i < 5; i++) {
+          const currentInput = document.getElementById('input' + i);
+          const value = numbers[i] || '';
+
+          setTimeout(() => {
+            currentInput.value = value;
+          }, 0);
+        }
+
+        event.preventDefault();
+
+        setTimeout(() => {
+          console.log("test1");
+          if (areAllFieldsFilled()) {
+            console.log("test2");
+            document.getElementById("loginForm").submit();
+          }
+        }, 10);
+        return;
+      }
       if (/[^0-9]/.test(input)) {
         element.value = input.replace(/[^0-9]/g, '');
       }
@@ -56,9 +92,22 @@
           }
         } else {
           element.blur();
+          if (areAllFieldsFilled()) {
+            confirmCode();
+          }
         }
         previousInput = input;
       }
+    }
+
+    function areAllFieldsFilled() {
+      for (let i = 0; i < 5; i++) {
+        const currentInput = document.getElementById('input' + i);
+        if (currentInput.value === '') {
+          return false;
+        }
+      }
+      return true;
     }
 
     function clearInput(element) {

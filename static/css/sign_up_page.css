@@ -32,11 +32,31 @@
     left: 70%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /* justify-content: center; */
     flex-direction: column;
 }
 .inputs {
     margin: 30px;
+}
+.no-account-container {
+    display: flex;
+    justify-content: center;
+}
+.no-account-text {
+    position: absolute;
+    font-size: 24px;
+    margin-right: 6px;
+}
+.log-in-button-container {
+    position: relative;
+    left: 27%;
+    margin-bottom: 20px;
+}
+.log-in-button {
+    width: 160px;
+    height: 27px;
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
 }
 .input {
     width: 550px;
