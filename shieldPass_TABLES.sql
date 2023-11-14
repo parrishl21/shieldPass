@@ -45,29 +45,24 @@ EXECUTE FUNCTION set_company();
 CREATE OR REPLACE FUNCTION check_login_password_strength()
 RETURNS TRIGGER AS $$
 DECLARE
-    uppercase_count INT;
+    password_length INT;
+	uppercase_count INT;
     digit_count INT;
     symbol_count INT;
-	strength_score INT;
 BEGIN
-    NEW.strength := 0; -- Initialize strength score
-    
-    -- Calculate counts
+	password_length := LENGTH(NEW.password);
     SELECT COUNT(*) INTO uppercase_count FROM regexp_matches(NEW.password, '[A-Z]', 'g');
     SELECT COUNT(*) INTO digit_count FROM regexp_matches(NEW.password, '[0-9]', 'g');
     SELECT COUNT(*) INTO symbol_count FROM regexp_matches(NEW.password, '[^\w\s]', 'g');
-
-    -- Calculate strength score
-    strength_score := (uppercase_count * 2) + (digit_count * 2) + (symbol_count * 3);
 	
-	IF strength_score < 5 THEN
-        NEW.strength := 0;
-    ELSIF strength_score < 10 THEN
-        NEW.strength := 1;
-    ELSIF strength_score < 15 THEN
-        NEW.strength := 2;
-    ELSE
+	IF uppercase_count >= 2 AND digit_count >= 2 AND symbol_count >= 2 AND password_length >= 16 THEN
         NEW.strength := 3;
+    ELSIF uppercase_count >= 1 AND digit_count >= 1 AND symbol_count >= 1 AND password_length >= 12 THEN
+        NEW.strength := 2;
+    ELSIF (uppercase_count >= 1 OR digit_count >= 1 OR symbol_count >= 2) AND password_length > 8 THEN
+        NEW.strength := 1;
+    ELSE
+        NEW.strength := 0;
     END IF;
 
     RETURN NEW;
