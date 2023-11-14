@@ -48,8 +48,6 @@ def before_request():
         )
         g.db_cursor = g.db_conn.cursor()
     except psycopg2.Error as e:
-        # Log the error or handle it in an appropriate way
-        # For example, you might want to return an error response to the client
         return f"Database connection error: {e}", 500
 
 @app.teardown_request
@@ -261,7 +259,6 @@ def save_changes():
     if request.method == 'POST':
         data = request.get_json()
         
-        # Extract the data from the JSON request
         lid = data['lid']
         website = data['website']
         email = data['email']
@@ -270,7 +267,6 @@ def save_changes():
         
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # Update the data in the PostgreSQL database
         g.db_cursor.execute("UPDATE login SET email = %s, username = %s, password = %s, website = %s, updated_at = %s WHERE lid = %s", (email, username, password, website, current_time, lid))
         g.db_conn.commit()
 
@@ -281,14 +277,12 @@ def save_changes_notes():
     if request.method == 'POST':
         data = request.get_json()
         
-        # Extract the data from the JSON request
         nid = data['nid']
         note_name = data['note_name']
         note = data['note']
         
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # Update the data in the PostgreSQL database
+        
         g.db_cursor.execute("UPDATE notes SET note_name = %s, note = %s, updated_at = %s WHERE nid = %s", (note_name, note, current_time, nid))
         g.db_conn.commit()
 
