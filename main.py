@@ -370,7 +370,7 @@ def get_note_info(note_id):
 @login_required
 def settings():
     user_id = session.get('_user_id')
-    g.db_cursor.execute("SELECT email, password FROM login WHERE uid = %s;", (user_id,))
+    g.db_cursor.execute("SELECT email, password FROM users WHERE uid = %s;", (user_id,))
     record = g.db_cursor.fetchone()
     
     email = record[0]
@@ -402,7 +402,7 @@ def delete_user_route():
     if user_id is not None:
         delete_user(user_id)
 
-    return redirect(url_for('logout'))
+    return jsonify({'success': 'User deleted successfully!'})
 
 def delete_user(uid):
     g.db_cursor.execute('DELETE FROM users WHERE UID = %s;', (uid,))
