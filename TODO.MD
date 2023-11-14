@@ -7,3 +7,4 @@
 
 ## Bugs:
 - [ ] when you click on a login it shouldn't reset filters
+- [ ] making checkbox just a square
