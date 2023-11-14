@@ -366,10 +366,47 @@ def get_note_info(note_id):
     else:
         return jsonify({'error': 'Login information not found'})
 
-@app.route('/homepage')
+@app.route('/settings', methods=['GET', 'POST'])
 @login_required
-def homepage():
-    return render_template('homepage.html')
+def settings():
+    user_id = session.get('_user_id')
+    g.db_cursor.execute("SELECT email, password FROM login WHERE uid = %s;", (user_id,))
+    record = g.db_cursor.fetchone()
+    
+    email = record[0]
+    password = record[1]
+    
+    if request.method =='POST':
+        new_email = request.form['email']
+        g.db_cursor.execute("SELECT email, password FROM users WHERE email = %s;", (new_email,))
+        result = g.db_cursor.fetchone()
+        
+        if result[0] == new_email:
+            message = ""
+            return render_template('settings.html', email=email, password=password, message=message)
+        elif result:
+            message = "Email already exists. Please try again."
+            return render_template('settings.html', email=email, password=password, message=message)
+        else:
+            g.db_cursor.execute("UPDATE users SET email = %s WHERE uid = %s", (new_email, user_id))
+            g.db_conn.commit()
+            
+            return render_template('settings.html', email=new_email, password=password)
+    
+    return render_template('settings.html', email=email, password=password)
+
+@app.route('/delete_user', methods=['POST'])
+def delete_user_route():
+    user_id = session.get('_user_id')
+
+    if user_id is not None:
+        delete_user(user_id)
+
+    return redirect(url_for('logout'))
+
+def delete_user(uid):
+    g.db_cursor.execute('DELETE FROM users WHERE UID = %s;', (uid,))
+    g.db_conn.commit()
 
 @app.route('/logout')
 @login_required
