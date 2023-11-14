@@ -101,15 +101,19 @@ transform: scale(0.7);
     box-sizing: border-box;
     padding: 10px;
 }
+.note-name-input-long-add::-webkit-scrollbar,
 .note-name-input-long::-webkit-scrollbar {
     width: 12px;
 }
+.note-name-input-long-add::-webkit-scrollbar-track,
 .note-name-input-long::-webkit-scrollbar-track {
     background: #3F3C3C;
 }
+.note-name-input-long-add::-webkit-scrollbar-thumb,
 .note-name-input-long::-webkit-scrollbar-thumb {
     background: #0DBC62;
 }
+.note-name-input-long-add::-webkit-scrollbar-thumb:hover,
 .note-name-input-long::-webkit-scrollbar-thumb:hover {
     background: #11E779;
 }
