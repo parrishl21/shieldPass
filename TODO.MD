@@ -3,7 +3,7 @@
 - [ ] we should add the login filters to notes
 - [ ] password strength code
 - [ ] consider putting the password strength in the generator
- 
+- [ ] change hide and show images are icons
 
 ## Bugs:
 - [ ] when you click on a login it shouldn't reset filters
