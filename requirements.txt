@@ -7,3 +7,4 @@ flask_mail
 Flask-Login
 werkzeug
 cryptography
+functools
