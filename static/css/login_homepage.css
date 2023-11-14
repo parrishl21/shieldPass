@@ -58,23 +58,13 @@ table {
     font-size: 18px;
     text-transform: capitalize
 }
-/* .left_rectangle {
-    width: 25%;
-    height: 100%;
-    background-color: #121212;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-} */
 .logo-img {
     max-width: 70px;
     max-height: 70px;
     width: auto;
     height: auto;
     object-fit: contain;
+    border-radius: 30px;
 }
 .add_password_button {
     position: fixed;
@@ -97,9 +87,8 @@ table {
 }
 .add_password_button::before {
 content: "+";
-transform: scale(0.7); /* Adjust the scale to make it thinner */
+transform: scale(0.7); 
 }
-/* Styles for the modal overlay */
 .modal {
     display: none; 
     position: fixed; 
@@ -111,7 +100,6 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     overflow: auto; 
     background-color: rgba(0,0,0,0.8); 
 }
-  /* Styles for the modal content */
 .modal-content {
     background-color: #121212;
     margin: 10% auto; 
@@ -123,7 +111,6 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     flex-direction: column;
     position: relative;
 }
-  /* Style for the close button */
 .close {
     color: #aaaaaa;
     right: 10px;
@@ -149,7 +136,6 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     overflow: auto; 
     background-color: rgba(0,0,0,0.8); 
 }
-  /* Styles for the modal content */
 .modal-confirm-content {
     background-color: #121212;
     margin: 10% auto; 
@@ -179,6 +165,14 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     font-size: 20px;
     color: black;
 }
+.add-password-input {
+    margin-bottom: 20px;
+    height: 65px;
+    border-radius: 10px;
+    text-indent: 15px;
+    font-size: 20px;
+    color: black;
+}
 .new-password-button {
     background-color: #0DBC62;
     height: 80px;
@@ -195,16 +189,16 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
 }
 .edit-button {
     flex-grow: 1;
-    margin-right: 10px; /* Adjust the margin as needed */
+    margin-right: 10px;
 }
 .save-button {
     flex-grow: 0;
-    width: 50%; /* Adjust the width as needed */
-    margin-right: 10px; /* Adjust the margin as needed */
+    width: 50%;
+    margin-right: 10px;
 }
 .delete-button {
     flex-grow: 0;
-    width: 50%; /* Adjust the width as needed */
+    width: 50%;
     background: none;
     color: red;
 }
@@ -243,9 +237,7 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     height: 100vh;
     overflow-y: auto;
     margin-left: 25%;
-    /* background-color: #e6e6e6; */
 }
-/* Customize the scrollbar */
 #scrollable-section::-webkit-scrollbar {
     width: 12px;
 }

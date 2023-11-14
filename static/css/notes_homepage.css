@@ -1,12 +1,9 @@
 .note-box {
     width: 200px;
     height: 45px;
-    /* border: 0; */
     margin-left: 60px;
     margin-bottom: 40px;
     background-color: white;
-    /* display: inline-block; */
-    /* position: relative; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,7 +41,7 @@
 }
 .add_note_button::before {
 content: "+";
-transform: scale(0.7); /* Adjust the scale to make it thinner */
+transform: scale(0.7); 
 }
 .invalid_email {
     display: none;
@@ -132,16 +129,16 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
 }
 .edit-button {
     flex-grow: 1;
-    margin-right: 10px; /* Adjust the margin as needed */
+    margin-right: 10px; 
 }
 .save-button {
     flex-grow: 0;
-    width: 50%; /* Adjust the width as needed */
-    margin-right: 10px; /* Adjust the margin as needed */
+    width: 50%;
+    margin-right: 10px; 
 }
 .delete-button {
     flex-grow: 0;
-    width: 50%; /* Adjust the width as needed */
+    width: 50%;
     background: none;
     color: red;
 }
@@ -184,10 +181,6 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     font-size: 21px;
     text-align: center;
 }
-/* .input-with-button {
-    position: relative;
-} */
-  /* Styles for the modal content */
 .modal-content {
     background-color: #121212;
     margin: 10% auto; 
@@ -199,7 +192,6 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     flex-direction: column;
     position: relative;
 }
-  /* Style for the close button */
 .close {
     color: #aaaaaa;
     right: 10px;
@@ -225,9 +217,7 @@ transform: scale(0.7); /* Adjust the scale to make it thinner */
     height: 100vh;
     overflow-y: auto;
     margin-left: 25%;
-    /* background-color: #e6e6e6; */
 }
-/* Customize the scrollbar */
 #scrollable-section::-webkit-scrollbar {
     width: 12px;
 }

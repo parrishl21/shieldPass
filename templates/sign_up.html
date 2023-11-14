@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Log In Page</title>
+    <title>Sign Up Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sign_up_page.css') }}">
 </head>
@@ -15,10 +15,14 @@
   <div class="inputs-container">
     <div class="sign-up-text"><h1>Sign Up</h1></div>
     <div class="thank-you-text"><p>Thank you for using ShieldPass</p></div>
+    <div class="no-account-container">
+      <div class="no-account-text"><p>Already have an account? <span style="color: #0DBC62;">Sign in here</span></p></div>
+      <div class="log-in-button-container"><button class="log-in-button" onclick="window.location.href='/'"></button></div>
+    </div>
     <form id="loginForm" action="/sign_up" method="post">
       <div class="inputs">
         <div style="margin-bottom: 6px;"><p style="font-size: 20px;">Email</p></div>
-        <input class="input" id="email_input" name="email_input" type="text" placeholder="Email">
+        <input class="input" id="email_input" name="email_input" type="text" value="{{ email }}" placeholder="Email">
         <p class="invalid_email" id="invalid_email">Invalid email address.</p>
       </div>
       <div class="inputs">
@@ -54,7 +58,7 @@
     
     <script>
       function ValidateEmail() {
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*.com$/;
+        var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         
         clearMessage("user_message");
 
@@ -140,6 +144,17 @@
           hideImg.style.display = 'none';
         }
       }
+      document.addEventListener('DOMContentLoaded', function () {
+        var myForm = document.getElementById('loginForm');
+        
+        myForm.addEventListener('keydown', function (e) {
+          if (e.keyCode === 13) {
+            e.preventDefault();
+  
+            ValidateEmail();
+          }
+        });
+      });
     </script>
 </body>
 

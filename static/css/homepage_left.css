@@ -33,31 +33,28 @@
     margin-left: 25px;
     
 }
-.search-input{
-    width: 220px;
-    height: 30px;
-    border: 1px solid #ccc;
-    border-radius: 75px 75px 75px 75px;
-    color: black;
-    font-size: 15px;
-    text-indent: 20px;
-    margin-top: 20px;
-    margin-left: -20px;
+.search-container {
+    margin-top: 25px;
+    position: relative;
+    /* width: 285px; */
+    width: 75%;
 }
-.sign-out-button {
-    width: 200px;
+.search-input {
+    width: 100%;
     height: 40px;
-    background-color: transparent ;
-    border-radius: 5px;
-    font-size: 20px;
-    cursor: pointer;
-    border: 0;
+    border: 1px solid #ccc;
+    border-radius: 75px;
+    color: black;
+    font-size: 16px;
+    text-indent: 40px;
 }
-.sign-out-box {
-    width: 220px;
-    height:40px;
-    background-color: #02ff7c;
-    border-radius: 5px;
+#search-icon {
+    color: grey;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
 }
 .sign-out-container {
     display: flex;
@@ -67,12 +64,43 @@
     position: relative;
     bottom: 20px;
 }
+.sign-out-button {
+    width: 100%;
+    height: 60px;
+    background-color: #0DBC62;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    border: 0;
+}
+.sign-out-button:hover {
+    background-color: #11E779;
+}
 .shieldPass-text {
     color: #0DBC62;
     text-align: center;
-    font-size: 23px;
-    margin-top: 25px;
-    
+    font-size: 30px;
+    margin-top: 35px;
+}
+.button-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    position: relative;
+    margin-top: 60px;
+}
+.icon-button {
+    display: flex;
+    flex-direction: row;
+    width: 280px;
+    margin-top: 0;
+}
+#button-icon {
+    color: white;
+    position: absolute;
+    margin-top: 3px;
+    font-size: 24px;
 }
 .settings-text,
 .button-text {
@@ -83,35 +111,18 @@
 }
 .all-button {
     position: absolute; 
-    width: 250px;
-    height: 70px;
+    width: 300px;
+    height: 60px;
     background-color: transparent;
     cursor: pointer;
-    border-radius: 80px 80px 80px 80px;
-    bottom: -20px;
-    border: 0;
-
-}
-
-.button-container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    position: relative;
-    margin-top: 60px;
-}
-.settings-button{
-    position: absolute; 
-    width: 250px;
-    height: 40px;
-    background-color: transparent;
-    cursor: pointer;
-    border-radius: 80px 80px 80px 80px;
-    top: -5px;
+    border-radius: 20px;
+    bottom: -17px;
     border: 0;
 }
-
+.button-container:hover .button-text,
+.button-container:hover #button-icon {
+    opacity: 0.5; 
+}
 .settings-container {
     display: flex;
     align-items: center;
@@ -120,29 +131,17 @@
     position: relative;
     bottom: 10px;
 }
-
-#button-icon {
-    color: white;
-    position: absolute;
-    left: 10%;
-    margin-top: 3px;
-    font-size: 24px;
+.settings-button{
+    position: absolute; 
+    width: 300px;
+    height: 45px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 20px;
+    top: -10px;
+    border: 0;
 }
-#search-icon {
-    color: grey;
-    position: absolute;
-    left: 20%;
-    margin-top: 75px;
-    font-size: 24px;
-  }
-.icon-button {
-    display: flex;
-    flex-direction: row;
-    width: 280px;
-}
-#searchInput {
-    text-indent: 40px; 
-  }
-#sign-out {
-    font-size: 20px;
+.settings-container:hover .settings-text,
+.settings-container:hover #button-icon {
+    opacity: 0.5; 
 }

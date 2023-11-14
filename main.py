@@ -1,6 +1,6 @@
 # TODO: Make it so the user has to do the two factor to be logged in
 
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, g
 import psycopg2, os, random
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
@@ -11,15 +11,6 @@ from flask_login import UserMixin, LoginManager, login_required, login_user, log
 load_dotenv()
 email_username = os.environ.get('EMAIL_USERNAME')
 email_password = os.environ.get('EMAIL_PASSWORD_CODE')
-
-# Set up for database
-conn = psycopg2.connect(
-    database='shield_pass',
-    user='raywu1990',
-    password='test',
-    host='127.0.0.1',
-    port='5432')
-cursor = conn.cursor()
 
 # Set up for user authentication
 class User(UserMixin):
@@ -38,11 +29,36 @@ app.config['MAIL_USE_SSL'] = False
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=30)
 mail = Mail(app)
 
+# Set up log in manager
 login_manager = LoginManager()
 login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User(user_id)
+
+@app.before_request
+def before_request():
+    try:
+        g.db_conn = psycopg2.connect(
+            database=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            host=os.getenv('DB_HOST'),
+            port=os.getenv('DB_PORT')
+        )
+        g.db_cursor = g.db_conn.cursor()
+    except psycopg2.Error as e:
+        # Log the error or handle it in an appropriate way
+        # For example, you might want to return an error response to the client
+        return f"Database connection error: {e}", 500
+
+@app.teardown_request
+def teardown_request(exception=None):
+    if hasattr(g, 'db_conn'):
+        g.db_conn.commit()
+        g.db_conn.close()
+    if hasattr(g, 'db_cursor'):
+        g.db_cursor.close()
 
 app.secret_key = os.environ.get('SECRET_KEY')
 
@@ -54,8 +70,8 @@ def index():
         db_email = request.form['email_input']
         db_password = request.form['password_input']
         
-        cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s;", (db_email, db_password))
-        result = cursor.fetchone()
+        g.db_cursor.execute("SELECT * FROM users WHERE email = %s AND password = %s;", (db_email, db_password))
+        result = g.db_cursor.fetchone()
         
         if result:
             user_id = result[0]
@@ -65,15 +81,13 @@ def index():
             email_code = " ".join(random_code) 
             session['verification_code'] = random_code
             msg = Message('Shield Pass Two-Factor', sender='shield.pass.two.factor@gmail.com', recipients=[db_email])
-            # msg.body = f'Your sign-in code: {random_code}'
-            # msg.body = "Authenticate Your Account To make sure you’re account is secure, you’ll need to verify your identity. Please enter the code below to access your account 1 2 3 4 5 Thank you for using ShieldPass"
             msg.html = render_template('emails/email_two_factor.html', email_code=email_code)
             msg.content_subtype = 'html'
             mail.send(msg)
             return redirect(url_for('two_factor'))
         else:
             message = "Invalid username or password. Please try again."
-            return render_template('log_in.html', message=message)
+            return render_template('log_in.html', message=message, email=db_email)
             
     return render_template('log_in.html')
 
@@ -85,22 +99,29 @@ def sign_up():
         email = request.form['email_input']
         password = request.form['password_input']
         
-        cursor.execute("SELECT * FROM users WHERE email=%s;", (email,))
-        user = cursor.fetchone()
+        g.db_cursor.execute("SELECT * FROM users WHERE email=%s;", (email,))
+        user = g.db_cursor.fetchone()
         
         if user is None:
-            cursor.execute('INSERT INTO users (email, password) VALUES (%s, %s);', (email, password))
-            conn.commit()
-            cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s;', (email, password))
-            result = cursor.fetchone()
+            g.db_cursor.execute('INSERT INTO users (email, password) VALUES (%s, %s);', (email, password))
+            g.db_conn.commit()
+            g.db_cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s;', (email, password))
+            result = g.db_cursor.fetchone()
             user_id = result[0]
             user = User(user_id)
             login_user(user)
+            random_code = ''.join(str(random.randint(0, 9)) for _ in range(5))
+            email_code = " ".join(random_code) 
+            session['verification_code'] = random_code
+            msg = Message('Shield Pass Two-Factor', sender='shield.pass.two.factor@gmail.com', recipients=[email])
+            msg.html = render_template('emails/email_two_factor.html', email_code=email_code)
+            msg.content_subtype = 'html'
+            mail.send(msg)
             return redirect(url_for('two_factor'))
         else:
             message = "Email already in use"
             
-        return render_template('sign_up.html', message=message)
+        return render_template('sign_up.html', message=message, email=email)
         
     return render_template('sign_up.html')
 
@@ -119,7 +140,7 @@ def two_factor():
         else:
             message = "Code does not match"
         
-        return render_template('enter_two_factor.html', message=message)
+        return render_template('enter_two_factor.html', message=message, input0=input0, input1=input1, input2=input2, input3=input3, input4=input4)
     
     return render_template('enter_two_factor.html')
 
@@ -128,12 +149,11 @@ def reset_password():
     if request.method == 'POST':
         email = request.form['email_input']
         
-        cursor.execute("SELECT * FROM users WHERE email=%s;", (email,))
-        user = cursor.fetchone()
+        g.db_cursor.execute("SELECT * FROM users WHERE email=%s;", (email,))
+        user = g.db_cursor.fetchone()
         
         if user is not None:
             msg = Message('Shield Pass Reset Password', sender='shield.pass.two.factor@gmail.com', recipients=[email])
-            # msg.body = f'Reset your password here: http://127.0.0.1:5000/new_password?email={email}'
             email_msg = f'http://127.0.0.1:5000/new_password?email={email}'
             msg.html = render_template('emails/email_send_email.html', email_link=email_msg)
             msg.content_subtype = 'html'
@@ -143,7 +163,7 @@ def reset_password():
         else:
             message = "Email not in use"
         
-        return render_template('reset_password.html', message=message)
+        return render_template('reset_password.html', message=message, email=email)
     
     return render_template('reset_password.html')
 
@@ -155,8 +175,8 @@ def new_password():
         password = request.form['password_input']
         email = request.form['email']
         
-        cursor.execute('UPDATE users SET password = %s WHERE email = %s;', (password, email))
-        conn.commit()
+        g.db_cursor.execute('UPDATE users SET password = %s WHERE email = %s;', (password, email))
+        g.db_conn.commit()
         
         return redirect(url_for('index'))
         
@@ -176,38 +196,38 @@ def login_homepage():
         username = request.form['new-username']
         password = request.form['new-password']
         
-        cursor.execute('INSERT INTO login (uid, website, email, username, password) VALUES (%s, %s, %s, %s, %s);', (user_id, website, email, username, password))
-        conn.commit()
+        g.db_cursor.execute('INSERT INTO login (uid, website, email, username, password) VALUES (%s, %s, %s, %s, %s);', (user_id, website, email, username, password))
+        g.db_conn.commit()
         return redirect(url_for('login_homepage'))
     
     if request.args.get('buttonName') == 'Popular':
-        cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY num_of_uses DESC;", (user_id,))
-        record = cursor.fetchall()
+        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY num_of_uses DESC;", (user_id,))
+        record = g.db_cursor.fetchall()
         sql_table = [(item[0], item[1]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'A-Z':
-        cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company;", (user_id,))
-        record = cursor.fetchall()
+        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company;", (user_id,))
+        record = g.db_cursor.fetchall()
         sql_table = [(item[0], item[1]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'Z-A':
-        cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company DESC;", (user_id,))
-        record = cursor.fetchall()
+        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company DESC;", (user_id,))
+        record = g.db_cursor.fetchall()
         sql_table = [(item[0], item[1]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'Oldest':
-        cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY updated_at;", (user_id,))
-        record = cursor.fetchall()
+        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY updated_at;", (user_id,))
+        record = g.db_cursor.fetchall()
         sql_table = [(item[0], item[1]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'Newest':
-        cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY updated_at DESC;", (user_id,))
-        record = cursor.fetchall()
+        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY updated_at DESC;", (user_id,))
+        record = g.db_cursor.fetchall()
         sql_table = [(item[0], item[1]) for item in record]
         return jsonify(sql_table)
     else:
-        cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company;", (user_id,))
-        record = cursor.fetchall()
+        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company;", (user_id,))
+        record = g.db_cursor.fetchall()
         ids = [records[0] for records in record]
         sql_table = [(item[1],) for item in record]
         return render_template('login_homepage.html', sql_table=zip(ids, sql_table))
@@ -221,16 +241,16 @@ def generator():
 def update_row(row_id):
     if request.method == 'PUT':
         try:
-            cursor.execute("UPDATE login SET num_of_uses = num_of_uses + 1 WHERE lid = %s", (row_id,))
-            conn.commit()
+            g.db_cursor.execute("UPDATE login SET num_of_uses = num_of_uses + 1 WHERE lid = %s", (row_id,))
+            g.db_conn.commit()
             return jsonify({'message': 'Row updated successfully.'})
         except Exception as e:
             return jsonify({'error': str(e)}), 500
 
 @app.route('/get_login_info/<int:login_id>', methods=['GET'])
 def get_login_info(login_id):
-    cursor.execute("SELECT website, email, username, password FROM login WHERE lid = %s;", (login_id,))
-    record = cursor.fetchone()
+    g.db_cursor.execute("SELECT website, email, username, password FROM login WHERE lid = %s;", (login_id,))
+    record = g.db_cursor.fetchone()
     if record:
         return jsonify({'website': record[0], 'email': record[1], 'username': record[2], 'password': record[3]})
     else:
@@ -251,8 +271,8 @@ def save_changes():
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Update the data in the PostgreSQL database
-        cursor.execute("UPDATE login SET email = %s, username = %s, password = %s, website = %s, updated_at = %s WHERE lid = %s", (email, username, password, website, current_time, lid))
-        conn.commit()
+        g.db_cursor.execute("UPDATE login SET email = %s, username = %s, password = %s, website = %s, updated_at = %s WHERE lid = %s", (email, username, password, website, current_time, lid))
+        g.db_conn.commit()
 
         return jsonify({'message': 'Data updated in the database.'})
     
@@ -269,8 +289,8 @@ def save_changes_notes():
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Update the data in the PostgreSQL database
-        cursor.execute("UPDATE notes SET note_name = %s, note = %s, updated_at = %s WHERE nid = %s", (note_name, note, current_time, nid))
-        conn.commit()
+        g.db_cursor.execute("UPDATE notes SET note_name = %s, note = %s, updated_at = %s WHERE nid = %s", (note_name, note, current_time, nid))
+        g.db_conn.commit()
 
         return jsonify({'message': 'Data updated in the database.'})
     
@@ -279,8 +299,8 @@ def delete_row():
     data = request.get_json()
     if data and 'row_id' in data:
         row_id = data['row_id']
-        cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
-        conn.commit()
+        g.db_cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
+        g.db_conn.commit()
         return jsonify({'message': 'Row deleted successfully.'})
     else:
         return jsonify({'message': 'Invalid data format.'}), 400
@@ -290,8 +310,8 @@ def delete_row_note():
     data = request.get_json()
     if data and 'row_id' in data:
         row_id = data['row_id']
-        cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
-        conn.commit()
+        g.db_cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
+        g.db_conn.commit()
         return jsonify({'message': 'Row deleted successfully.'})
     else:
         return jsonify({'message': 'Invalid data format.'}), 400
@@ -301,8 +321,19 @@ def search():
     data = request.get_json()
     query = data['query']
 
-    cursor.execute("SELECT lid, company FROM login WHERE company ILIKE %s ORDER BY company;", ('%' + query + '%',))
-    record = cursor.fetchall()
+    g.db_cursor.execute("SELECT lid, company FROM login WHERE company ILIKE %s ORDER BY company;", ('%' + query + '%',))
+    record = g.db_cursor.fetchall()
+    sql_table = [(item[0], item[1]) for item in record]
+
+    return jsonify(sql_table)
+
+@app.route('/search_notes', methods=['POST'])
+def search_notes():
+    data = request.get_json()
+    query = data['query']
+
+    g.db_cursor.execute("SELECT nid, note_name FROM notes WHERE note_name ILIKE %s ORDER BY note_name;", ('%' + query + '%',))
+    record = g.db_cursor.fetchall()
     sql_table = [(item[0], item[1]) for item in record]
 
     return jsonify(sql_table)
@@ -316,29 +347,66 @@ def notes_homepage():
         note_name = request.form['note-name-add']
         note = request.form['note-add']
         
-        cursor.execute('INSERT INTO notes (uid, note_name, note) VALUES (%s, %s, %s);', (user_id, note_name, note))
-        conn.commit()
+        g.db_cursor.execute('INSERT INTO notes (uid, note_name, note) VALUES (%s, %s, %s);', (user_id, note_name, note))
+        g.db_conn.commit()
         return redirect(url_for('notes_homepage'))
     
-    cursor.execute("SELECT nid, note_name FROM notes WHERE uid = %s ORDER BY note_name;", (user_id,))
-    record = cursor.fetchall()
+    g.db_cursor.execute("SELECT nid, note_name FROM notes WHERE uid = %s ORDER BY note_name;", (user_id,))
+    record = g.db_cursor.fetchall()
     ids = [records[0] for records in record]
     sql_table = [item[1] for item in record]
     return render_template('notes_homepage.html', sql_table=zip(ids, sql_table))
 
 @app.route('/get_note_info/<int:note_id>', methods=['GET'])
 def get_note_info(note_id):
-    cursor.execute("SELECT note_name, note FROM notes WHERE nid = %s;", (note_id,))
-    record = cursor.fetchone()
+    g.db_cursor.execute("SELECT note_name, note FROM notes WHERE nid = %s;", (note_id,))
+    record = g.db_cursor.fetchone()
     if record:
         return jsonify({'note_name': record[0], 'note': record[1]})
     else:
         return jsonify({'error': 'Login information not found'})
 
-@app.route('/homepage')
+@app.route('/settings', methods=['GET', 'POST'])
 @login_required
-def homepage():
-    return render_template('homepage.html')
+def settings():
+    user_id = session.get('_user_id')
+    g.db_cursor.execute("SELECT email, password FROM login WHERE uid = %s;", (user_id,))
+    record = g.db_cursor.fetchone()
+    
+    email = record[0]
+    password = record[1]
+    
+    if request.method =='POST':
+        new_email = request.form['email']
+        g.db_cursor.execute("SELECT email, password FROM users WHERE email = %s;", (new_email,))
+        result = g.db_cursor.fetchone()
+        
+        if result[0] == new_email:
+            message = ""
+            return render_template('settings.html', email=email, password=password, message=message)
+        elif result:
+            message = "Email already exists. Please try again."
+            return render_template('settings.html', email=email, password=password, message=message)
+        else:
+            g.db_cursor.execute("UPDATE users SET email = %s WHERE uid = %s", (new_email, user_id))
+            g.db_conn.commit()
+            
+            return render_template('settings.html', email=new_email, password=password)
+    
+    return render_template('settings.html', email=email, password=password)
+
+@app.route('/delete_user', methods=['POST'])
+def delete_user_route():
+    user_id = session.get('_user_id')
+
+    if user_id is not None:
+        delete_user(user_id)
+
+    return redirect(url_for('logout'))
+
+def delete_user(uid):
+    g.db_cursor.execute('DELETE FROM users WHERE UID = %s;', (uid,))
+    g.db_conn.commit()
 
 @app.route('/logout')
 @login_required
