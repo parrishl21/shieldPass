@@ -8,7 +8,7 @@ CREATE TABLE users (
 CREATE TABLE login (
 	LID SERIAL PRIMARY KEY,
 	UID SERIAL,
-	CONSTRAINT fk_user_logins FOREIGN KEY (UID) REFERENCES users(UID),
+	CONSTRAINT fk_user_logins FOREIGN KEY (UID) REFERENCES users(UID) ON DELETE CASCADE,
 	website varchar(256) NOT NULL,
 	company varchar(256),
 	email varchar(256) NOT NULL,
