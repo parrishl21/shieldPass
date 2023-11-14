@@ -3,11 +3,11 @@
 ## Quick Notes
 
 <ins>Make sure that the following are set on your local machine:</ins>
-- Database is called 'shield_pass'
 - Database hosted on the same machine as your code
+- Database is named 'shield_pass'
 - Database port is set to '5432'
-- Database user called 'raywu1990' with password 'test'
-- Database has all needed tables and triggers (inside of teams and GitHub)
+- Database user called 'raywu1990' with password 'test' and is a SuperUser
+- Database has all needed tables and triggers (inside of teams and GitHub, just run the .SQL)
 
 ## Quick Start
 
