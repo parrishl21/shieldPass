@@ -12,7 +12,7 @@
 - [ ] change hide and show images are icons
 - [ ] when there is no scrollbar, there is a green square
 
-## Bugs:
+### Bugs:
 
 - [ ] when you click on a login it shouldn't reset filters
 - [ ] making checkbox just a square
