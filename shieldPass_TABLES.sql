@@ -23,7 +23,7 @@ CREATE TABLE notes (
 	NID SERIAL PRIMARY KEY,
 	UID SERIAL,
 	CONSTRAINT fk_user_notes FOREIGN KEY (UID) REFERENCES users(UID) ON DELETE CASCADE,
-	note_name varchar(256) NOT NULL,
+	note_name varchar(32) NOT NULL,
 	note TEXT NOT NULL,
 	updated_at TIMESTAMP DEFAULT current_timestamp NOT NULL
 );

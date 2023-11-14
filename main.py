@@ -6,6 +6,7 @@ from flask_mail import Mail, Message
 from dotenv import load_dotenv
 from datetime import timedelta, datetime
 from flask_login import UserMixin, LoginManager, login_required, login_user, logout_user
+from functools import wraps
 
 # Set up for email
 load_dotenv()
@@ -36,6 +37,14 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User(user_id)
 
+def check_completion(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not session.get('completed_step'):
+            return redirect(url_for('index'))
+        return func(*args, **kwargs)
+    return wrapper
+
 @app.before_request
 def before_request():
     try:
@@ -48,8 +57,6 @@ def before_request():
         )
         g.db_cursor = g.db_conn.cursor()
     except psycopg2.Error as e:
-        # Log the error or handle it in an appropriate way
-        # For example, you might want to return an error response to the client
         return f"Database connection error: {e}", 500
 
 @app.teardown_request
@@ -74,12 +81,11 @@ def index():
         result = g.db_cursor.fetchone()
         
         if result:
-            user_id = result[0]
-            user = User(user_id)
-            login_user(user)
             random_code = ''.join(str(random.randint(0, 9)) for _ in range(5))
             email_code = " ".join(random_code) 
             session['verification_code'] = random_code
+            session['temp_user_id'] = result[0]
+            session['completed_step'] = True
             msg = Message('Shield Pass Two-Factor', sender='shield.pass.two.factor@gmail.com', recipients=[db_email])
             msg.html = render_template('emails/email_two_factor.html', email_code=email_code)
             msg.content_subtype = 'html'
@@ -107,12 +113,11 @@ def sign_up():
             g.db_conn.commit()
             g.db_cursor.execute('SELECT * FROM users WHERE email = %s AND password = %s;', (email, password))
             result = g.db_cursor.fetchone()
-            user_id = result[0]
-            user = User(user_id)
-            login_user(user)
             random_code = ''.join(str(random.randint(0, 9)) for _ in range(5))
             email_code = " ".join(random_code) 
             session['verification_code'] = random_code
+            session['temp_user_id'] = result[0]
+            session['completed_step'] = True
             msg = Message('Shield Pass Two-Factor', sender='shield.pass.two.factor@gmail.com', recipients=[email])
             msg.html = render_template('emails/email_two_factor.html', email_code=email_code)
             msg.content_subtype = 'html'
@@ -126,7 +131,7 @@ def sign_up():
     return render_template('sign_up.html')
 
 @app.route('/two_factor', methods=['GET', 'POST'])
-@login_required
+@check_completion
 def two_factor():
     if request.method == 'POST':
         input0 = request.form['input0']
@@ -136,6 +141,9 @@ def two_factor():
         input4 = request.form['input4']
         stored_code = session.get('verification_code')
         if (input0 == stored_code[0] and input1 == stored_code[1] and input2 == stored_code[2] and input3 == stored_code[3] and input4 == stored_code[4]):
+            user_id = session['temp_user_id']
+            user = User(user_id)
+            login_user(user)
             return redirect(url_for('login_homepage'))
         else:
             message = "Code does not match"
@@ -261,7 +269,6 @@ def save_changes():
     if request.method == 'POST':
         data = request.get_json()
         
-        # Extract the data from the JSON request
         lid = data['lid']
         website = data['website']
         email = data['email']
@@ -270,7 +277,6 @@ def save_changes():
         
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        # Update the data in the PostgreSQL database
         g.db_cursor.execute("UPDATE login SET email = %s, username = %s, password = %s, website = %s, updated_at = %s WHERE lid = %s", (email, username, password, website, current_time, lid))
         g.db_conn.commit()
 
@@ -281,14 +287,12 @@ def save_changes_notes():
     if request.method == 'POST':
         data = request.get_json()
         
-        # Extract the data from the JSON request
         nid = data['nid']
         note_name = data['note_name']
         note = data['note']
         
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # Update the data in the PostgreSQL database
+        
         g.db_cursor.execute("UPDATE notes SET note_name = %s, note = %s, updated_at = %s WHERE nid = %s", (note_name, note, current_time, nid))
         g.db_conn.commit()
 
@@ -370,7 +374,7 @@ def get_note_info(note_id):
 @login_required
 def settings():
     user_id = session.get('_user_id')
-    g.db_cursor.execute("SELECT email, password FROM login WHERE uid = %s;", (user_id,))
+    g.db_cursor.execute("SELECT email, password FROM users WHERE uid = %s;", (user_id,))
     record = g.db_cursor.fetchone()
     
     email = record[0]
@@ -402,7 +406,7 @@ def delete_user_route():
     if user_id is not None:
         delete_user(user_id)
 
-    return redirect(url_for('logout'))
+    return jsonify({'success': 'User deleted successfully!'})
 
 def delete_user(uid):
     g.db_cursor.execute('DELETE FROM users WHERE UID = %s;', (uid,))

@@ -154,6 +154,7 @@
         }
 
         function deleteUser() {
+            closePopup();
             fetch('/delete_user', {
                 method: 'POST',
                 headers: {
@@ -163,8 +164,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                alert('User deleted successfully!');
+                console.log(data['success']);
+                window.location.href='/logout';
             })
             .catch(error => console.error('Error:', error));
         };
