@@ -5,6 +5,7 @@
 - [ ] Make it so passwords are hidden by default for both the settings and logins
 - [ ] password strength code
 - [ ] make it so when clicking on the left shield pass text it goes to the login homepage
+- [ ] make it so buttons are interactible
 
 ### Optional:
 
@@ -16,4 +17,3 @@
 
 - [ ] when you click on a login it shouldn't reset filters
 - [ ] making checkbox just a square
-- [ ] make it so buttons are interactible
