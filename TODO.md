@@ -5,7 +5,7 @@
 - [ ] Make it so passwords are hidden by default for both the settings and logins
 - [ ] password strength code
 - [ ] make it so when clicking on the left shield pass text it goes to the login homepage
-- [ ] make it so buttons are interactible
+- [ ] make it so buttons are interactible (CSS)
 
 ### Optional:
 
