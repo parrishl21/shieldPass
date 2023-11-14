@@ -12,6 +12,7 @@
 - [ ] consider putting the password strength in the generator
 - [ ] change hide and show images are icons
 - [ ] when there is no scrollbar, there is a green square
+- [ ] automatically submit 2fa code after putting in the last digit
 
 ### Bugs:
 
