@@ -5,6 +5,7 @@
 - [ ] consider putting the password strength in the generator
 - [ ] change hide and show images are icons
 - [ ] make it so when clicking on the left shield pass text it goes to the login homepage
+- [ ] when there is no scrollbar, there is a green square
 
 ## Bugs:
 - [ ] when you click on a login it shouldn't reset filters
