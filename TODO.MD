@@ -1,6 +1,8 @@
 # TO-DO:
 - [ ] Make it so passwords are hidden by default for both the settings and logins
 - [ ] we should add the login filters to notes
+- [ ] password strength code
+- [ ] consider putting the password strength in the generator
  
 
 ## Bugs:
