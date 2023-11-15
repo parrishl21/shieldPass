@@ -96,7 +96,7 @@
                     <input class="add-password-input" id="new-username" name="new-username" type="text" placeholder="Username">
                     <p class="new-password-text">Password</p>
                     <input class="add-password-input" id="new-password" name="new-password" type="text" placeholder="Password">
-                    <button class="new-password-button" onclick="ValidateEmail()">Add</button>
+                    <button class="new-password-button add-button" onclick="ValidateEmail()">Add</button>
                     <p class="invalid_email" id="invalid_email">Invalid email address.</p>
                     <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
                 </div>
@@ -112,21 +112,21 @@
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-email-view" name="new-email-view" type="text" placeholder="Email" readonly>
                         <button class="copy-button" onclick="copyText('new-email-view')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                            <i class="far fa-clone" id="clone-icon"></i> 
                         </button>
                     </div>
                     <p class="new-password-text">Username</p>
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-username-view" name="new-username-view" type="text" placeholder="Username" readonly>
                         <button class="copy-button" onclick="copyText('new-username-view')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i>
+                            <i class="far fa-clone" id="clone-icon"></i>
                         </button>
                     </div>
                     <p class="new-password-text">Password</p>
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-password-view" name="new-password-view" type="text" placeholder="Password" readonly>
                         <button class="copy-button" onclick="copyText('new-password-view')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                            <i class="far fa-clone" id="clone-icon"></i> 
                         </button>
                     </div>
                     <div class="edit-save-delete-container">

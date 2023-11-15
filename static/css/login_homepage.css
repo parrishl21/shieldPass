@@ -185,6 +185,18 @@ transform: scale(0.7);
     margin-top: 15px;
     margin-right: 10px;
 }
+.add-button:hover {
+    background-color: #11E779;
+}
+.edit-button:hover {
+    background-color: #11E779;
+}
+.save-button:hover {
+    background-color: #11E779;
+}
+.delete-button:hover {
+    opacity: 0.55;
+}
 .edit-save-delete-container {
     display: flex;
     justify-content: flex-start;
@@ -204,6 +216,12 @@ transform: scale(0.7);
     width: 50%;
     background: none;
     color: red;
+}
+#clone-icon {
+    color: #4CAF50;
+}
+#clone-icon:hover {
+    color: #11E779;
 }
 .invalid_email {
     display: none;
