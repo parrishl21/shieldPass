@@ -86,40 +86,55 @@ function changeColor(buttonName) {
 }
 function updateTable(data) {
     var table = document.querySelector('table');
-    
     table.innerHTML = '';
-    
+
     // Add new rows based on the updated data
     for (var i = 0; i < data.length; i++) {
         var row = table.insertRow(-1); // Insert at the end of the table
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.classList.add('left-column');
-        cell2.classList.add('right-column');
+        row.onclick = function () {
+            fetchLoginInfo(data[i][0]);
+        };
 
-        // Check if the Clearbit image URL is valid
-        var logoSrc = 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45';
-
-        // Create a closure to capture the values for this iteration
-        (function (src, cell) {
-            var img = new Image();
-            img.src = src;
-
-            img.onerror = function () {
-                // If image fails to load, use a default image URL
-                cell.innerHTML = '<img class="logo-img" src="https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found" alt="No Logo">';
-            };
-
-            // If the image loads successfully, use the Clearbit image
-            img.onload = function () {
-                cell.innerHTML = '<img class="logo-img" src="' + src + '" alt="No Logo">';
-            };
-        })(logoSrc, cell1);
-
-        cell2.innerHTML = data[i][1];
-        row.setAttribute('onclick', 'fetchLoginInfo(' + data[i][0] + ')');
+        createCell(row, 'left-column', 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45', true);
+        createCell(row, 'right-column', data[i][1], false);
+        createCell(row, 'strength-column', data[i][2], false);
     }
 }
+function createCell(row, className, content, isImage) {
+    var cell = row.insertCell(-1);
+    cell.classList.add(className);
+
+    if (isImage) {
+        var img = new Image();
+        img.src = content;
+
+        img.onerror = function () {
+            cell.innerHTML = '<img class="logo-img" src="https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found" alt="No Logo">';
+        };
+
+        img.onload = function () {
+            cell.innerHTML = '<img class="logo-img" src="' + content + '" alt="No Logo">';
+        };
+    } else if (className === 'strength-column') {
+        var statusTextCell = row.insertCell(-1);
+        statusTextCell.innerHTML = '<p class="status-text">' + getRectangleName(content) + '</p>';
+
+        var rectangleContainer = document.createElement('div');
+        rectangleContainer.className = 'rectangle-container';
+
+        for (var j = 0; j < 3; j++) {
+            var rectangle = document.createElement('div');
+            rectangle.className = 'rectangle ' + getRectangleClass(content, j);
+            rectangleContainer.appendChild(rectangle);
+        }
+
+        var rectangleCell = row.insertCell(-1);
+        rectangleCell.appendChild(rectangleContainer);
+    } else {
+        cell.innerHTML = content;
+    }
+}
+
 function openConfirmModal() {
     event.preventDefault();
     document.getElementById("modal-confirm").style.display = "block";
@@ -379,4 +394,34 @@ function clearSearch() {
 function replaceWithErrorImage(image) {
     image.onerror = null;
     image.src = "https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found";
+}
+function getRectangleClass(strength, target_rectangle) {
+    if (strength === 0) {
+        return 'weak';
+    } else if (strength === 1) {
+        if (target_rectangle === 0) {
+            return 'filled_okay';
+        } else {
+            return 'empty_okay';
+        }
+    } else if (strength === 2) {
+        if (target_rectangle === 2) {
+            return 'empty_great';
+        } else {
+            return 'filled_great';
+        }
+    } else {
+        return 'excellent';
+    }
+}
+function getRectangleName(strength) {
+    if (strength === 0) {
+        return 'Weak';
+    } else if (strength === 1) {
+        return 'Okay';
+    } else if (strength === 2) {
+        return 'Great';
+    } else {
+        return 'Excellent';
+    }
 }

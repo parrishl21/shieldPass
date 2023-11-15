@@ -226,6 +226,37 @@ transform: scale(0.7);
     cursor: pointer;
     font-size: 28px;
 }
+.rectangle-container {
+    display: flex;
+    margin-right: 20px;
+}
+.rectangle {
+    margin-right: 10px;
+    height: 30px;
+    width: 15px;
+    border: 1px solid red;
+}
+.weak {
+    border-color: red;
+}
+.filled_okay {
+    border-color: yellow;
+    background-color: yellow;
+}
+.filled_great {
+    border-color: lightgreen;
+    background-color: lightgreen;
+}
+.empty_okay {
+    border-color: yellow;
+}
+.empty_great {
+    border-color: lightgreen;
+}
+.excellent {
+    border-color: green;
+    background-color: green;
+}
 #fixed-section {
     width: 25%;
     height: 100vh;

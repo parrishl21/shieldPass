@@ -67,12 +67,18 @@
             </div>
         </div>
         <table>
-            {% for row_id, row in sql_table %}
+            {% for row_id, (col, strength) in sql_table %}
             <tr onclick="fetchLoginInfo({{row_id}})">
-                {% for col in row %}
-                    <td class="left-column"><img class="logo-img" src="https://logo.clearbit.com/{{col}}.com?size=45" onerror="replaceWithErrorImage(this)" alt="No Logo"></td>
-                    <td class="right-column">{{col}}</td>
-                {% endfor %}
+                <td class="left-column"><img class="logo-img" src="https://logo.clearbit.com/{{col}}.com?size=45" onerror="replaceWithErrorImage(this)" alt="No Logo"></td>
+                <td class="right-column">{{col}}</td>
+                <td><p class="status-text">{% if strength == 0 %} Weak {% elif strength == 1 %} Okay {% elif strength == 2 %} Great {% else %} Excellent {% endif %}</p></td>
+                <td>
+                    <div class="rectangle-container">
+                        <div class="rectangle {% if strength == 0 %} weak {% elif strength == 1 %} filled_okay {% elif strength == 2 %} filled_great {% else %} excellent {% endif %}"></div>
+                        <div class="rectangle {% if strength == 0 %} weak {% elif strength == 1 %} empty_okay {% elif strength == 2 %} filled_great {% else %} excellent {% endif %}"></div>
+                        <div class="rectangle {% if strength == 0 %} weak {% elif strength == 1 %} empty_okay {% elif strength == 2 %} empty_great {% else %} excellent {% endif %}"></div>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </table>
