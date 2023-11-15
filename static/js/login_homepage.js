@@ -99,7 +99,7 @@ function changeColor(buttonName) {
 }
 function updateTable(data) {
     var table = document.querySelector('table');
-    table.innerHTML = '';
+    table.innerHTML = '<caption style="text-align:right; margin-right: 51px;">Password Strength</caption>';
 
     // Add new rows based on the updated data
     for (var i = 0; i < data.length; i++) {
