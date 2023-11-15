@@ -69,17 +69,18 @@
                     <p class="invalid_user" id="user_message">{{ message }}</p>
                 {% endif %}
                 <div class="save-container">
-                    <button id="saveButton" class="save-button-main" onclick="ValidateEmail()">Save</button>
+                    <button id="saveButton" class="save-button-main save-button-hover" onclick="ValidateEmail()">Save</button>
                 </div>
                 <div class="reset-container">
-                    <div class="reset-text"><p><span style="color: #0DBC62;">Reset password</span></p></div>
-                    <button class="reset-button" onclick="window.location.href='/reset_password'"></button>
+                    <button class="reset-button" onclick="window.location.href='/reset_password'">
+                        <p class="reset-text">Reset password</p>
+                    </button>
                 </div>
                 <!-- <div class="dark-mode-container">
                     <input class="dark-mode-checkbox" id="darkMode" name="darkMode" type="checkbox" onchange="darkMode()" checked>
                     <label class="dark-mode-text" for="darkMode">Dark Mode</label>
                 </div> -->
-                <button class="delete-text" onclick="openPopup()">Delete Account</button>
+                <button class="delete-text delete-button-hover" onclick="openPopup()">Delete Account</button>
                 <!-- <div id="popup_view" class="popup">
                     <div class="popup-content">
                         <p class="confirmation-message">Are you sure you want to delete your ShieldPass account?</p>
@@ -92,8 +93,8 @@
                         <p class="confirm-modal-text">Are you sure you want to delete</p>
                         <p class="confirm-modal-text" style="margin-bottom: 20px;">your ShieldPass account?</p>
                         <div class="edit-save-delete-container">
-                            <button class="new-password-button delete-button" onclick="deleteUser()">Yes</button>
-                            <button class="new-password-button save-button" onclick="closePopup()">Cancel</button>
+                            <button class="new-password-button delete-button delete-button-hover" onclick="deleteUser()">Yes</button>
+                            <button class="new-password-button save-button save-button-hover" onclick="closePopup()">Cancel</button>
                         </div>
                     </div>
                 </div>

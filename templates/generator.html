@@ -61,7 +61,7 @@
                     <div class="input-with-button">
                         <input class="generator-output" id="generator-output" name="generator-output" type="text" placeholder="Password" readonly>
                         <button class="copy-button" onclick="copyText('generator-output')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                            <i class="far fa-clone" id="clone-icon"></i> 
                         </button>
                     </div>
                     <div class="checkbox-div">
@@ -78,7 +78,7 @@
                         <input class="generator-checkbox" id="generator-symbols" name="generator-symbols" onchange="generatePassword()" type="checkbox">
                         <label class="generator-text" for="generator-symbols">Include Symbols</label></br>
                     </div>
-                    <button class="generate-button" onclick="generatePassword()">Regenerate</button>
+                    <button class="generate-button" onclick="generatePassword()">Generate New Password</button>
                 </div>
             </div>
         </form>
