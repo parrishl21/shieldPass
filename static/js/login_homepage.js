@@ -1,6 +1,7 @@
 var buttonClicked = false;
 let currentRowId;
 let currentSelectedButtonName = 'A-Z';
+let saveCheck = false;
 
 function showButtons() {
     var slideOutButtons = document.getElementById("filter-slide-out-buttons");
@@ -158,7 +159,10 @@ function closeModalView() {
     document.querySelector('.save-button').style.display = 'none';
     document.querySelector('.edit-button').style.display = 'inline-block';
     document.querySelector('.delete-button').style.display = 'none';
-    location.reload();
+    if (saveCheck) {
+        saveCheck = false;
+        changeColor(currentSelectedButtonName);
+    }
 }
 function closeModal() {
     var email_i = document.getElementById('invalid_email');
@@ -283,6 +287,7 @@ function makeEditable() {
 }
 function saveChanges() {
     event.preventDefault();
+    saveCheck = true;
 
     let lid = currentRowId;
     var website = document.getElementById('new-website-view').value;
