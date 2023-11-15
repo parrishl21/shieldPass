@@ -43,11 +43,14 @@ table {
     position: relative;
 }
 .filter-show-buttons:hover {
-    color: #C4C4C4;
+    color: #A8A8A8;
 }
 .filter:hover,
 .filter:hover span {
-    color: #C4C4C4;
+    color: #A8A8A8;
+}
+.filter-show-buttons.selected {
+    color: #0DBC62;
 }
 .left-column {
     width: 5%;

@@ -13,15 +13,27 @@ function showButtons() {
         buttonClicked = false;
     }
 }
+document.addEventListener("DOMContentLoaded", function() {
+    // Set the initial color based on the selected button (assuming currentSelectedButtonName is already defined)
+    var initialSelectedButton = document.querySelector('.filter-show-buttons[onclick="changeColor(\'' + currentSelectedButtonName + '\')"]');
+    if (initialSelectedButton) {
+        initialSelectedButton.classList.add('selected');
+    }
+});
+
 function changeColor(buttonName) {
     clearSearch();
     currentSelectedButtonName = buttonName;
+
+    // Remove the 'selected' class from all buttons
     var buttons = document.getElementsByClassName('filter-show-buttons');
     for (var i = 0; i < buttons.length; i++) {
-        buttons[i].style.color = 'white'; // Change all text colors to white
+        buttons[i].classList.remove('selected');
     }
-    var selectedButton = document.querySelector('button[onclick="changeColor(\'' + buttonName + '\')"]');
-    selectedButton.style.color = '#0DBC62'; // Change the text color of the clicked button to green
+
+    // Add the 'selected' class to the currently clicked button
+    var selectedButton = document.querySelector('.filter-show-buttons[onclick="changeColor(\'' + buttonName + '\')"]');
+    selectedButton.classList.add('selected');
     
     // Implement specific actions for each button here
     if (buttonName === 'A-Z') {
@@ -191,18 +203,18 @@ function ValidateEmail() {
     }
 
     function showEmailMessage(input) {
-    var email_i = document.getElementById('invalid_email');
-    var inputs_i = document.getElementById('invalid_inputs');
-    
-    inputs_i.style.display = 'none';
-    email_i.style.display = 'none';
-    
-    if (input === true) {
-        checkInputs();
-    }
-    else {
-        email_i.style.display = 'block';
-    }
+        var email_i = document.getElementById('invalid_email');
+        var inputs_i = document.getElementById('invalid_inputs');
+        
+        inputs_i.style.display = 'none';
+        email_i.style.display = 'none';
+        
+        if (input === true) {
+            checkInputs();
+        }
+        else {
+            email_i.style.display = 'block';
+        }
     }
 
     function checkInputs() {
