@@ -91,16 +91,14 @@ function updateTable(data) {
     // Add new rows based on the updated data
     for (var i = 0; i < data.length; i++) {
         var row = table.insertRow(-1); // Insert at the end of the table
-        row.onclick = function () {
-            fetchLoginInfo(data[i][0]);
-        };
+        row.setAttribute('onclick', 'fetchLoginInfo(' + data[i][0] + ')');
 
-        createCell(row, 'left-column', 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45', true);
+        createCell(row, 'left-column', 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45', true, data[i][0]);
         createCell(row, 'right-column', data[i][1], false);
         createCell(row, 'strength-column', data[i][2], false);
     }
 }
-function createCell(row, className, content, isImage) {
+function createCell(row, className, content, isImage, row_id) {
     var cell = row.insertCell(-1);
     cell.classList.add(className);
 
