@@ -67,6 +67,7 @@
             </div>
         </div>
         <table>
+            <caption style="text-align:right; margin-right: 51px;">Password Strength</caption>
             {% for row_id, (col, strength) in sql_table %}
             <tr onclick="fetchLoginInfo({{row_id}})">
                 <td class="left-column"><img class="logo-img" src="https://logo.clearbit.com/{{col}}.com?size=45" onerror="replaceWithErrorImage(this)" alt="No Logo"></td>
