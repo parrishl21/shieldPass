@@ -83,15 +83,31 @@
 .password-container {
     position: relative;
 }
-.show-password {
-position: absolute;
-top: 10px;
-right: 10px;
-cursor: pointer;
-}
 .show-password-image {
     width: 45px;
     height: auto;
+}
+#showImg {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 20px;
+    bottom: 20px;
+    opacity: .6;
+}
+#showImg:hover {
+    opacity: .8;
+}
+#hideImg {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 20px;
+    bottom: 20px;
+    opacity: .6;
+}
+#hideImg:hover {
+    opacity: .8;
 }
 .thank-you-text {
     text-align: center;
