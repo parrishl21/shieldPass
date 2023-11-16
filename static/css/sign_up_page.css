@@ -93,9 +93,49 @@
     right: 10px;
     cursor: pointer;
 }
-.show-password-image {
-    width: 45px;
-    height: auto;
+#showImg1 {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 10px;
+    top: 7px;
+    opacity: .6;
+}
+#showImg1:hover {
+    opacity: .8;
+}
+#showImg2 {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 10px;
+    top: 7px;
+    opacity: .6;
+}
+#showImg2:hover {
+    opacity: .8;
+}
+#hideImg1 {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 10px;
+    top: 7px;
+    opacity: .6;
+}
+#hideImg1:hover {
+    opacity: .8;
+}
+#hideImg2 {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 10px;
+    top: 7px;
+    opacity: .6;
+}
+#hideImg2:hover {
+    opacity: .8;
 }
 .enter-button {
     position: relative;
