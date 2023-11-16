@@ -14,7 +14,7 @@
 - [ ] when there is no scrollbar, there is a green square
 - [ ] automatically submit 2fa code after putting in the last digit
 - [ ] light mode
-- [ ] filter by password strength (weakest)
+- [X] filter by password strength (weakest)
 
 ### Bugs:
 
