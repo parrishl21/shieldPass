@@ -17,8 +17,8 @@
         <div class="sign-up-text"><h1>Sign In</h1></div>
         <div class="thank-you-text"><p>Create your secure account</p></div>
         <div class="no-account-container">
-            <div class="no-account-text"><p>Don't have an account? <span style="color: #0DBC62;">Sign up here</span></p></div>
-            <div class="sign-up-button-container"><button class="sign-up-button" onclick="window.location.href='/sign_up'"></button></div>
+            <div class="no-account-text"><p>Don't have an account? <span style="color: #0DBC62;" id="signupLink">Sign up here</span></p></div>
+            <div class="sign-up-button-container"><button class="sign-up-button" onclick="window.location.href='/sign_up'" id="signupButton"></button></div>
         </div>
         <form id="loginForm" action="/" method="post">
           <div class="inputs">
@@ -48,12 +48,17 @@
             {% endif %}
         </div>
         <div class="reset-container">
-            <div class="reset-text"><p><span style="color: #0DBC62;">Reset password</span></p></div>
-            <button class="reset-button" onclick="window.location.href='/reset_password'"></button>
+            <div class="reset-text"><p><span style="color: #0DBC62;" id="resetLink">Reset password</span></p></div>
+            <button class="reset-button" onclick="window.location.href='/reset_password'" id="resetButton"></button>
         </div>
     </div>
 
     <script>
+      const signupButton = document.getElementById('signupButton');
+      const signupLink = document.getElementById('signupLink');
+      const resetLink = document.getElementById('resetLink');
+      const resetButton = document.getElementById('resetButton');
+
       function ValidateEmail() {
         var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -104,6 +109,18 @@
           hideImg.style.display = 'none';
         }
       }
+      signupButton.addEventListener('mouseenter', () => {
+        signupLink.style.opacity = '0.7';
+      });
+      signupButton.addEventListener('mouseleave', () => {
+        signupLink.style.opacity = '1';
+      });
+      resetButton.addEventListener('mouseenter', () => {
+        resetLink.style.opacity = '0.7';
+      });
+      resetButton.addEventListener('mouseleave', () => {
+        resetLink.style.opacity = '1';
+      });
     </script>
 
 </body>

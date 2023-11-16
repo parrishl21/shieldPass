@@ -102,7 +102,7 @@
     opacity: .6;
 }
 #showImg1:hover {
-    opacity: .8;
+    opacity: .9;
 }
 #showImg2 {
     position: absolute;
@@ -113,7 +113,7 @@
     opacity: .6;
 }
 #showImg2:hover {
-    opacity: .8;
+    opacity: .9;
 }
 #hideImg1 {
     position: absolute;
@@ -124,7 +124,7 @@
     opacity: .6;
 }
 #hideImg1:hover {
-    opacity: .8;
+    opacity: .9;
 }
 #hideImg2 {
     position: absolute;
@@ -135,7 +135,7 @@
     opacity: .6;
 }
 #hideImg2:hover {
-    opacity: .8;
+    opacity: .9;
 }
 .enter-button {
     position: relative;

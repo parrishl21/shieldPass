@@ -99,7 +99,7 @@
     opacity: .6;
 }
 #showImg:hover {
-    opacity: .8;
+    opacity: .9;
 }
 #hideImg {
     position: absolute;
@@ -110,7 +110,10 @@
     opacity: .6;
 }
 #hideImg:hover {
-    opacity: .8;
+    opacity: .9;
+}
+.sign-up-link {
+    color: #0DBC62;
 }
 .thank-you-text {
     text-align: center;
