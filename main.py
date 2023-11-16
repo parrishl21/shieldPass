@@ -233,6 +233,11 @@ def login_homepage():
         record = g.db_cursor.fetchall()
         sql_table = [(item[0], item[1], item[2]) for item in record]
         return jsonify(sql_table)
+    elif request.args.get('buttonName') == 'Weakest':
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY strength;", (user_id,))
+        record = g.db_cursor.fetchall()
+        sql_table = [(item[0], item[1], item[2]) for item in record]
+        return jsonify(sql_table)
     else:
         g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY company;", (user_id,))
         record = g.db_cursor.fetchall()

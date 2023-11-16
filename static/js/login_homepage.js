@@ -95,6 +95,17 @@ function changeColor(buttonName) {
         .catch(error => {
             console.error('Error:', error);
         });
+    } else if (buttonName === 'Weakest') {
+        fetch('/login_homepage?buttonName=Weakest', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateTable(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 }
 function updateTable(data) {
