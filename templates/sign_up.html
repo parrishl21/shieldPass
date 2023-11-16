@@ -17,8 +17,8 @@
     <div class="sign-up-text"><h1>Sign Up</h1></div>
     <div class="thank-you-text"><p>Thank you for using ShieldPass</p></div>
     <div class="no-account-container">
-      <div class="no-account-text"><p>Already have an account? <span style="color: #0DBC62;">Sign in here</span></p></div>
-      <div class="log-in-button-container"><button class="log-in-button" onclick="window.location.href='/'"></button></div>
+      <div class="no-account-text"><p>Already have an account? <span style="color: #0DBC62;" id="signinLink">Sign in here</span></p></div>
+      <div class="log-in-button-container"><button class="log-in-button" onclick="window.location.href='/'" id="signinButton"></button></div>
     </div>
     <form id="loginForm" action="/sign_up" method="post">
       <div class="inputs">
@@ -91,6 +91,8 @@
       function passwordChecker() {
         var password = document.getElementById("password_input").value;
         var passwordConfirm = document.getElementById("password_confirm_input").value;
+        const signinButton = document.getElementById('signinButton');
+        const signinLink = document.getElementById('signinLink');
 
         if (password && passwordConfirm) {
           if (password === passwordConfirm) {
@@ -155,6 +157,12 @@
             ValidateEmail();
           }
         });
+      });
+      signinButton.addEventListener('mouseenter', () => {
+        signinLink.style.opacity = '0.7';
+      });
+      signinButton.addEventListener('mouseleave', () => {
+        signinLink.style.opacity = '1';
       });
     </script>
 </body>

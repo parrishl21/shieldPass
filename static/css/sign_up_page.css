@@ -147,6 +147,9 @@
     font-size: 18px;
     cursor: pointer;
 }
+.enter-button:hover {
+    background-color: #11E779;
+}
 .enter-box {
     position: absolute;
     width: 550px;
