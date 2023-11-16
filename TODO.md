@@ -6,6 +6,7 @@
 - [X] password strength code
 - [ ] make it so that when clicking on the left shield pass text it goes to the login homepage
 - [X] make it so buttons are interactable (CSS)
+- [X] filter by password strength (weakest)
 
 ### Optional:
 
@@ -14,7 +15,7 @@
 - [ ] when there is no scrollbar, there is a green square
 - [ ] automatically submit 2fa code after putting in the last digit
 - [ ] light mode
-- [X] filter by password strength (weakest)
+- [ ] transitions (filter at least)
 
 ### Bugs:
 
