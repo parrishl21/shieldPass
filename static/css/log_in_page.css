@@ -74,6 +74,9 @@
     background-color: #0DBC62;
     border-radius: 5px;
 }
+.enter-container:hover .enter-box {
+    background-color: #11E779;
+}
 .sign-up-text {
     text-align: center;
     font-size: 32px;

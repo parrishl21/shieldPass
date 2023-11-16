@@ -39,8 +39,10 @@
           </div>
         </form>
         <div class="inputs">
-            <div class="enter-box"></div>
-            <button class="enter-button" onclick="ValidateEmail()">Login</button>
+            <div class="enter-container">
+              <div class="enter-box"></div>
+              <button class="enter-button" onclick="ValidateEmail()">Login</button>
+            </div>
             {% if message %}
               <p class="invalid_user" id="user_message">{{ message }}</p>
             {% endif %}
