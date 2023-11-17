@@ -308,7 +308,7 @@ def delete_row():
     data = request.get_json()
     if data and 'row_id' in data:
         row_id = data['row_id']
-        g.db_cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
+        g.db_cursor.execute("DELETE FROM login WHERE lid = %s", (row_id,))
         g.db_conn.commit()
         return jsonify({'message': 'Row deleted successfully.'})
     else:
