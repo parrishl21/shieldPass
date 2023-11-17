@@ -21,4 +21,4 @@
 
 - [X] when you click on login it shouldn't reset the filters
 - [ ] making the checkbox just a square
-- [ ] delete not deleting
+- [X] delete not deleting
