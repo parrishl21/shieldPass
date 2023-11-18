@@ -5,7 +5,7 @@ th, td {
 tr {
     border-bottom: 1px solid #ddd;
 }
-tr:hover {background-color: #0DBC62;}
+tr:hover {background-color: #0DBC62; cursor: pointer;}
 table {
     width: 92%;
     border-collapse: collapse;
