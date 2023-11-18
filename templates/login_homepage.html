@@ -116,22 +116,28 @@
                     <p class="new-password-text">Email</p>
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-email-view" name="new-email-view" type="text" placeholder="Email" readonly>
-                        <button class="copy-button" onclick="copyText('new-email-view')">
-                            <i class="far fa-clone" id="clone-icon"></i> 
+                        <button class="copy-button" onclick="copyText('new-email-view', 'email-clone-icon')">
+                            <i class="far fa-clone" id="email-clone-icon"></i> 
                         </button>
                     </div>
                     <p class="new-password-text">Username</p>
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-username-view" name="new-username-view" type="text" placeholder="Username" readonly>
-                        <button class="copy-button" onclick="copyText('new-username-view')">
-                            <i class="far fa-clone" id="clone-icon"></i>
+                        <button class="copy-button" onclick="copyText('new-username-view', 'username-clone-icon')">
+                            <i class="far fa-clone" id="username-clone-icon"></i>
                         </button>
                     </div>
                     <p class="new-password-text">Password</p>
                     <div class="input-with-button">
-                        <input class="new-password-input" id="new-password-view" name="new-password-view" type="text" placeholder="Password" readonly>
-                        <button class="copy-button" onclick="copyText('new-password-view')">
-                            <i class="far fa-clone" id="clone-icon"></i> 
+                        <div class="password-container">
+                            <input class="new-password-input" id="new-password-view" name="new-password-view" type="password" placeholder="Password" readonly>
+                            <span class="show-password" onclick="togglePasswordVisibility()">
+                              <i class="fa fa-eye-slash fa-2x" aria-hidden="true" id="showImg" alt="Show" style="display: inline;"></i>
+                              <i class="fa fa-eye fa-2x" aria-hidden="true" id="hideImg" alt="Hide" style="display: none;"></i>
+                            </span>
+                        </div>
+                        <button class="copy-button" onclick="copyText('new-password-view', 'password-clone-icon')">
+                            <i class="far fa-clone" id="password-clone-icon"></i>
                         </button>
                     </div>
                     <div class="edit-save-delete-container">

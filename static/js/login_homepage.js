@@ -274,20 +274,32 @@ function ValidateEmail() {
         console.error('Error:', error);
     });
 }        
-function copyText(inputId) {
+function copyText(inputId, iconId) {
     event.preventDefault();
     var inputElement = document.getElementById(inputId);
-    inputElement.select();
-    inputElement.setSelectionRange(0, 99999); // For mobile devices 
-    document.execCommand("copy");
-    
-    var originalHtml = document.getElementById(inputId).nextElementSibling.innerHTML;
-    document.getElementById(inputId).nextElementSibling.innerHTML = '<i class="fas fa-clipboard-check" style="color: #4CAF50; font-size: 30px;"></i>'; // Change to clipboard with check
 
-    setTimeout(function() {
-        document.getElementById(inputId).nextElementSibling.innerHTML = originalHtml; // Revert back to clone
+    // Create a temporary input element
+    var tempInput = document.createElement("input");
+    tempInput.style.position = "absolute";
+    tempInput.style.left = "-9999px";
+    document.body.appendChild(tempInput);
+
+    // Set the temporary input value to the password value
+    tempInput.setAttribute("value", inputElement.value);
+    tempInput.select();
+    document.execCommand("copy");
+
+    // Clean up: remove the temporary input
+    document.body.removeChild(tempInput);
+
+    var iconElement = document.getElementById(iconId);
+    iconElement.className = "fas fa-clipboard-check"; // Change the icon to indicate successful copy
+
+    setTimeout(function () {
+        iconElement.className = "far fa-clone"; // Revert back to the original icon
     }, 1000); // Revert after 1 second(s)
 }
+
 function makeEditable() {
     event.preventDefault();
 
@@ -449,5 +461,20 @@ function getRectangleName(strength) {
         return 'Great';
     } else {
         return 'Excellent';
+    }
+}
+function togglePasswordVisibility() {
+    var passwordField = document.getElementById('new-password-view');
+    var showImg = document.getElementById('showImg');
+    var hideImg = document.getElementById('hideImg');
+
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      showImg.style.display = 'none';
+      hideImg.style.display = 'inline';
+    } else {
+      passwordField.type = 'password';
+      showImg.style.display = 'inline';
+      hideImg.style.display = 'none';
     }
 }

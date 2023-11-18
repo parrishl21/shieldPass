@@ -217,10 +217,14 @@ transform: scale(0.7);
     background: none;
     color: red;
 }
-#clone-icon {
+#password-clone-icon,
+#username-clone-icon,
+#email-clone-icon {
     color: #4CAF50;
 }
-#clone-icon:hover {
+#password-clone-icon:hover,
+#username-clone-icon:hover,
+#email-clone-icon:hover {
     color: #11E779;
 }
 .invalid_email {
@@ -246,6 +250,37 @@ transform: scale(0.7);
     border: none;
     cursor: pointer;
     font-size: 28px;
+}
+.password-container {
+    position: relative;
+}
+#showImg {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 20px;
+    bottom: 20px;
+    opacity: .6;
+}
+#showImg:hover {
+    opacity: .9;
+}
+#hideImg {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 20px;
+    bottom: 20px;
+    opacity: .6;
+}
+#hideImg:hover {
+    opacity: .9;
+}
+.show-password {
+    position: absolute;
+    top: 71px;
+    right: 32px;
+    cursor: pointer;
 }
 .rectangle-container {
     display: flex;
