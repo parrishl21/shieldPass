@@ -22,3 +22,4 @@
 - [X] when you click on login it shouldn't reset the filters
 - [ ] making the checkbox just a square
 - [X] delete not deleting
+- [ ] when spamming copy, the copy button stays
