@@ -49,6 +49,7 @@ b {
     margin-bottom: 20px;
     font-size: 21px;
     vertical-align: middle;
+    cursor: pointer;
 }
 .generator-output {
     margin-bottom: 10px;
@@ -75,6 +76,7 @@ b {
     box-sizing: border-box;
     padding: 8px;
     vertical-align: middle;
+    cursor: pointer;
 }
 .generator-checkbox:checked {
     background: #0DBC62;
@@ -126,7 +128,12 @@ b {
 .slider::-moz-range-track {
     cursor: pointer;
 }
-
+#username-clone-icon {
+    color: #4CAF50;
+}
+#username-clone-icon:hover {
+    color: #11E779;
+}
 .generate-button {
     background-color: #0DBC62;
     height: 80px;
@@ -136,6 +143,9 @@ b {
     margin-top: 35px;
     margin-right: 10px;
     width: 100%;
+}
+.generate-button:hover {
+    background-color: #11E779;
 }
 .input-with-button {
     position: relative;

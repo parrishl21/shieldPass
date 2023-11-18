@@ -209,35 +209,40 @@ def login_homepage():
         return redirect(url_for('login_homepage'))
     
     if request.args.get('buttonName') == 'Popular':
-        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY num_of_uses DESC;", (user_id,))
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY num_of_uses DESC;", (user_id,))
         record = g.db_cursor.fetchall()
-        sql_table = [(item[0], item[1]) for item in record]
+        sql_table = [(item[0], item[1], item[2]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'A-Z':
-        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company;", (user_id,))
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY company;", (user_id,))
         record = g.db_cursor.fetchall()
-        sql_table = [(item[0], item[1]) for item in record]
+        sql_table = [(item[0], item[1], item[2]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'Z-A':
-        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company DESC;", (user_id,))
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY company DESC;", (user_id,))
         record = g.db_cursor.fetchall()
-        sql_table = [(item[0], item[1]) for item in record]
+        sql_table = [(item[0], item[1], item[2]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'Oldest':
-        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY updated_at;", (user_id,))
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY updated_at;", (user_id,))
         record = g.db_cursor.fetchall()
-        sql_table = [(item[0], item[1]) for item in record]
+        sql_table = [(item[0], item[1], item[2]) for item in record]
         return jsonify(sql_table)
     elif request.args.get('buttonName') == 'Newest':
-        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY updated_at DESC;", (user_id,))
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY updated_at DESC;", (user_id,))
         record = g.db_cursor.fetchall()
-        sql_table = [(item[0], item[1]) for item in record]
+        sql_table = [(item[0], item[1], item[2]) for item in record]
+        return jsonify(sql_table)
+    elif request.args.get('buttonName') == 'Weakest':
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY strength;", (user_id,))
+        record = g.db_cursor.fetchall()
+        sql_table = [(item[0], item[1], item[2]) for item in record]
         return jsonify(sql_table)
     else:
-        g.db_cursor.execute("SELECT lid, company FROM login WHERE uid = %s ORDER BY company;", (user_id,))
+        g.db_cursor.execute("SELECT lid, company, strength FROM login WHERE uid = %s ORDER BY company;", (user_id,))
         record = g.db_cursor.fetchall()
         ids = [records[0] for records in record]
-        sql_table = [(item[1],) for item in record]
+        sql_table = [(item[1], item[2]) for item in record]
         return render_template('login_homepage.html', sql_table=zip(ids, sql_table))
 
 @app.route('/generator')
@@ -303,7 +308,7 @@ def delete_row():
     data = request.get_json()
     if data and 'row_id' in data:
         row_id = data['row_id']
-        g.db_cursor.execute("DELETE FROM notes WHERE nid = %s", (row_id,))
+        g.db_cursor.execute("DELETE FROM login WHERE lid = %s", (row_id,))
         g.db_conn.commit()
         return jsonify({'message': 'Row deleted successfully.'})
     else:

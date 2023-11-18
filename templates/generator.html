@@ -14,7 +14,10 @@
 
 <body onload="updateLength()">
     <div class="left_rectangle" id="fixed-section">
-        <p class="shieldPass-text">ShieldPass</p>
+        <div class="shieldPass-container">
+            <button class="shieldPass-button" onclick="window.location.href='/login_homepage'"></button>
+            <p class="shieldPass-text">ShieldPass</p>
+        </div>
         <div class="search-container">
             <i class="fas fa-search" id="search-icon"></i>
             <input class="search-input" id="searchInput" onkeyup="searchDatabase()" type="text" placeholder="Search"> 
@@ -60,8 +63,8 @@
                 <div class="modal-content">
                     <div class="input-with-button">
                         <input class="generator-output" id="generator-output" name="generator-output" type="text" placeholder="Password" readonly>
-                        <button class="copy-button" onclick="copyText('generator-output')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                        <button class="copy-button" onclick="copyText('generator-output', 'username-clone-icon')">
+                            <i class="far fa-clone" id="username-clone-icon"></i>
                         </button>
                     </div>
                     <div class="checkbox-div">
@@ -78,7 +81,7 @@
                         <input class="generator-checkbox" id="generator-symbols" name="generator-symbols" onchange="generatePassword()" type="checkbox">
                         <label class="generator-text" for="generator-symbols">Include Symbols</label></br>
                     </div>
-                    <button class="generate-button" onclick="generatePassword()">Regenerate</button>
+                    <button class="generate-button" onclick="generatePassword()">Generate New Password</button>
                 </div>
             </div>
         </form>

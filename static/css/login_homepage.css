@@ -5,7 +5,7 @@ th, td {
 tr {
     border-bottom: 1px solid #ddd;
 }
-tr:hover {background-color: #0DBC62;}
+tr:hover {background-color: #0DBC62; cursor: pointer;}
 table {
     width: 92%;
     border-collapse: collapse;
@@ -15,9 +15,9 @@ table {
     position: relative;
 }
 .filter {
-    margin-top: -25px;
+    margin-top: -50px;
     position: absolute;
-    right: 130px;
+    right: 140px;
     cursor: pointer;
     padding: 0;
     border: none;
@@ -26,7 +26,7 @@ table {
     background: none;
 }
 .filter-slide-out-buttons {
-    margin-top: -22px;
+    margin-top: -49px;
     right: 345px;
     display: none;
     position: absolute;
@@ -43,11 +43,14 @@ table {
     position: relative;
 }
 .filter-show-buttons:hover {
-    color: #C4C4C4;
+    color: #A8A8A8;
 }
 .filter:hover,
 .filter:hover span {
-    color: #C4C4C4;
+    color: #A8A8A8;
+}
+.filter-show-buttons.selected {
+    color: #0DBC62;
 }
 .left-column {
     width: 5%;
@@ -182,6 +185,18 @@ transform: scale(0.7);
     margin-top: 15px;
     margin-right: 10px;
 }
+.add-button:hover {
+    background-color: #11E779;
+}
+.edit-button:hover {
+    background-color: #11E779;
+}
+.save-button:hover {
+    background-color: #11E779;
+}
+.delete-button:hover {
+    opacity: 0.55;
+}
 .edit-save-delete-container {
     display: flex;
     justify-content: flex-start;
@@ -201,6 +216,16 @@ transform: scale(0.7);
     width: 50%;
     background: none;
     color: red;
+}
+#password-clone-icon,
+#username-clone-icon,
+#email-clone-icon {
+    color: #4CAF50;
+}
+#password-clone-icon:hover,
+#username-clone-icon:hover,
+#email-clone-icon:hover {
+    color: #11E779;
 }
 .invalid_email {
     display: none;
@@ -225,6 +250,68 @@ transform: scale(0.7);
     border: none;
     cursor: pointer;
     font-size: 28px;
+}
+.password-container {
+    position: relative;
+}
+#showImg {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 20px;
+    bottom: 20px;
+    opacity: .6;
+}
+#showImg:hover {
+    opacity: .9;
+}
+#hideImg {
+    position: absolute;
+    cursor: pointer;
+    color: black;
+    right: 20px;
+    bottom: 20px;
+    opacity: .6;
+}
+#hideImg:hover {
+    opacity: .9;
+}
+.show-password {
+    position: absolute;
+    top: 71px;
+    right: 32px;
+    cursor: pointer;
+}
+.rectangle-container {
+    display: flex;
+    margin-right: 20px;
+}
+.rectangle {
+    margin-right: 10px;
+    height: 30px;
+    width: 15px;
+    border: 1px solid red;
+}
+.weak {
+    border-color: red;
+}
+.filled_okay {
+    border-color: yellow;
+    background-color: yellow;
+}
+.filled_great {
+    border-color: #1976D2;
+    background-color: #1976D2;
+}
+.empty_okay {
+    border-color: yellow;
+}
+.empty_great {
+    border-color: #1976D2;
+}
+.excellent {
+    border-color: #4CAF50;
+    background-color: #4CAF50;
 }
 #fixed-section {
     width: 25%;

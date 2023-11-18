@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/notes_homepage.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage_left.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-... " crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
     <script src="{{ url_for('static', filename='js/notes_homepage.js') }}"></script>
 </head>
 
 <body>
     <div class="left_rectangle" id="fixed-section">
-        <p class="shieldPass-text">ShieldPass</p>
+        <div class="shieldPass-container">
+            <button class="shieldPass-button" onclick="window.location.href='/login_homepage'"></button>
+            <p class="shieldPass-text">ShieldPass</p>
+        </div>
         <div class="search-container">
             <i class="fas fa-search" id="search-icon"></i>
             <input class="search-input" id="searchInput" onkeyup="searchDatabase()" type="text" placeholder="Search"> 
@@ -71,7 +74,7 @@
                     <input class="note-name-input-add" id="note-name-add" name="note-name-add" type="text" placeholder="Note Name">
                     <p class="note-name-text-add">Note</p>
                     <textarea class="note-name-input-long-add" id="note-add" name="note-add" type="text" placeholder="Note"></textarea>
-                    <button class="new-note-button" onclick="checkInputs()">Add</button>
+                    <button class="new-note-button add-button" onclick="checkInputs()">Add</button>
                     <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
                 </div>
             </div>

@@ -13,7 +13,10 @@
 
 <body>
     <div class="left_rectangle" id="fixed-section">
-        <p class="shieldPass-text">ShieldPass</p>
+        <div class="shieldPass-container">
+            <button class="shieldPass-button" onclick="window.location.href='/login_homepage'"></button>
+            <p class="shieldPass-text">ShieldPass</p>
+        </div>
         <div class="search-container">
             <i class="fas fa-search" id="search-icon"></i>
             <input class="search-input" id="searchInput" onkeyup="searchDatabase()" type="text" placeholder="Search"> 
@@ -59,20 +62,28 @@
                 <span style="font-size: 32px;">≡</span> Filter
             </button>
             <div class="filter-slide-out-buttons" id="filter-slide-out-buttons">
-                <button class="filter-show-buttons" style="left: 40px; color: #0DBC62" onclick="changeColor('A-Z')">A-Z</button>
-                <button class="filter-show-buttons" style="left: 60px;" onclick="changeColor('Z-A')">Z-A</button>
-                <button class="filter-show-buttons" style="left: 80px;" onclick="changeColor('Oldest')">Oldest</button>
-                <button class="filter-show-buttons" style="left: 100px;" onclick="changeColor('Newest')">Newest</button>
-                <button class="filter-show-buttons" style="left: 120px;" onclick="changeColor('Popular')">Popular</button>
+                <button class="filter-show-buttons" style="left: 20px;" onclick="changeColor('A-Z')">A-Z</button>
+                <button class="filter-show-buttons" style="left: 40px;" onclick="changeColor('Z-A')">Z-A</button>
+                <button class="filter-show-buttons" style="left: 60px;" onclick="changeColor('Oldest')">Oldest</button>
+                <button class="filter-show-buttons" style="left: 80px;" onclick="changeColor('Newest')">Newest</button>
+                <button class="filter-show-buttons" style="left: 100px;" onclick="changeColor('Popular')">Popular</button>
+                <button class="filter-show-buttons" style="left: 120px;" onclick="changeColor('Weakest')">Weakest</button>
             </div>
         </div>
         <table>
-            {% for row_id, row in sql_table %}
+            <caption style="text-align:right; margin-right: 51px;">Password Strength</caption>
+            {% for row_id, (col, strength) in sql_table %}
             <tr onclick="fetchLoginInfo({{row_id}})">
-                {% for col in row %}
-                    <td class="left-column"><img class="logo-img" src="https://logo.clearbit.com/{{col}}.com?size=45" onerror="replaceWithErrorImage(this)" alt="No Logo"></td>
-                    <td class="right-column">{{col}}</td>
-                {% endfor %}
+                <td class="left-column"><img class="logo-img" src="https://logo.clearbit.com/{{col}}.com?size=45" onerror="replaceWithErrorImage(this)" alt="No Logo"></td>
+                <td class="right-column">{{col}}</td>
+                <td><p class="status-text">{% if strength == 0 %} Weak {% elif strength == 1 %} Okay {% elif strength == 2 %} Great {% else %} Excellent {% endif %}</p></td>
+                <td>
+                    <div class="rectangle-container">
+                        <div class="rectangle {% if strength == 0 %} weak {% elif strength == 1 %} filled_okay {% elif strength == 2 %} filled_great {% else %} excellent {% endif %}"></div>
+                        <div class="rectangle {% if strength == 0 %} weak {% elif strength == 1 %} empty_okay {% elif strength == 2 %} filled_great {% else %} excellent {% endif %}"></div>
+                        <div class="rectangle {% if strength == 0 %} weak {% elif strength == 1 %} empty_okay {% elif strength == 2 %} empty_great {% else %} excellent {% endif %}"></div>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </table>
@@ -90,7 +101,7 @@
                     <input class="add-password-input" id="new-username" name="new-username" type="text" placeholder="Username">
                     <p class="new-password-text">Password</p>
                     <input class="add-password-input" id="new-password" name="new-password" type="text" placeholder="Password">
-                    <button class="new-password-button" onclick="ValidateEmail()">Add</button>
+                    <button class="new-password-button add-button" onclick="ValidateEmail()">Add</button>
                     <p class="invalid_email" id="invalid_email">Invalid email address.</p>
                     <p class="invalid_email" id="invalid_inputs">Please fill out all inputs.</p>
                 </div>
@@ -105,22 +116,28 @@
                     <p class="new-password-text">Email</p>
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-email-view" name="new-email-view" type="text" placeholder="Email" readonly>
-                        <button class="copy-button" onclick="copyText('new-email-view')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                        <button class="copy-button" onclick="copyText('new-email-view', 'email-clone-icon')">
+                            <i class="far fa-clone" id="email-clone-icon"></i> 
                         </button>
                     </div>
                     <p class="new-password-text">Username</p>
                     <div class="input-with-button">
                         <input class="new-password-input" id="new-username-view" name="new-username-view" type="text" placeholder="Username" readonly>
-                        <button class="copy-button" onclick="copyText('new-username-view')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i>
+                        <button class="copy-button" onclick="copyText('new-username-view', 'username-clone-icon')">
+                            <i class="far fa-clone" id="username-clone-icon"></i>
                         </button>
                     </div>
                     <p class="new-password-text">Password</p>
                     <div class="input-with-button">
-                        <input class="new-password-input" id="new-password-view" name="new-password-view" type="text" placeholder="Password" readonly>
-                        <button class="copy-button" onclick="copyText('new-password-view')">
-                            <i class="far fa-clone" style="color: #4CAF50;"></i> 
+                        <div class="password-container">
+                            <input class="new-password-input" id="new-password-view" name="new-password-view" type="password" placeholder="Password" readonly>
+                            <span class="show-password" onclick="togglePasswordVisibility()">
+                              <i class="fa fa-eye-slash fa-2x" aria-hidden="true" id="showImg" alt="Show" style="display: inline;"></i>
+                              <i class="fa fa-eye fa-2x" aria-hidden="true" id="hideImg" alt="Hide" style="display: none;"></i>
+                            </span>
+                        </div>
+                        <button class="copy-button" onclick="copyText('new-password-view', 'password-clone-icon')">
+                            <i class="far fa-clone" id="password-clone-icon"></i>
                         </button>
                     </div>
                     <div class="edit-save-delete-container">

@@ -6,6 +6,7 @@
     <title>Sign Up Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/sign_up_page.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 </head>
 
 <body>
@@ -16,8 +17,8 @@
     <div class="sign-up-text"><h1>Sign Up</h1></div>
     <div class="thank-you-text"><p>Thank you for using ShieldPass</p></div>
     <div class="no-account-container">
-      <div class="no-account-text"><p>Already have an account? <span style="color: #0DBC62;">Sign in here</span></p></div>
-      <div class="log-in-button-container"><button class="log-in-button" onclick="window.location.href='/'"></button></div>
+      <div class="no-account-text"><p>Already have an account? <span style="color: #0DBC62;" id="signinLink">Sign in here</span></p></div>
+      <div class="log-in-button-container"><button class="log-in-button" onclick="window.location.href='/'" id="signinButton"></button></div>
     </div>
     <form id="loginForm" action="/sign_up" method="post">
       <div class="inputs">
@@ -30,8 +31,8 @@
         <div class="password-container">
           <input class="input" id="password_input" name="password_input" type="password" placeholder="Password">
           <span class="show-password" onclick="togglePasswordVisibility1()">
-            <img class="show-password-image" src="{{ url_for('static', filename='images/slash_eye.png') }}" id="showImg1" alt="Show" style="display: inline;">
-            <img class="show-password-image" src="{{ url_for('static', filename='images/normal_eye.png') }}" id="hideImg1" alt="Hide" style="display: none;">
+            <i class="fa fa-eye-slash fa-2x" aria-hidden="true" id="showImg1" style="display: inline;"></i>
+            <i class="fa fa-eye fa-2x" aria-hidden="true" id="hideImg1" style="display: none;"></i>
           </span>
         </div>
       </div>
@@ -40,8 +41,8 @@
         <div class="password-container">
           <input class="input" id="password_confirm_input" name="password_confirm_input" type="password" placeholder="Confirm Password">
           <span class="show-password" onclick="togglePasswordVisibility2()">
-            <img class="show-password-image" src="{{ url_for('static', filename='images/slash_eye.png') }}" id="showImg2" alt="Show" style="display: inline;">
-            <img class="show-password-image" src="{{ url_for('static', filename='images/normal_eye.png') }}" id="hideImg2" alt="Hide" style="display: none;">
+            <i class="fa fa-eye-slash fa-2x" aria-hidden="true" id="showImg2" style="display: inline;"></i>
+            <i class="fa fa-eye fa-2x" aria-hidden="true" id="hideImg2" style="display: none;"></i>
           </span>
         </div>
         <p class="invalid_password" id="invalid_password">Password is not the same or is empty.</p>
@@ -90,6 +91,8 @@
       function passwordChecker() {
         var password = document.getElementById("password_input").value;
         var passwordConfirm = document.getElementById("password_confirm_input").value;
+        const signinButton = document.getElementById('signinButton');
+        const signinLink = document.getElementById('signinLink');
 
         if (password && passwordConfirm) {
           if (password === passwordConfirm) {
@@ -154,6 +157,12 @@
             ValidateEmail();
           }
         });
+      });
+      signinButton.addEventListener('mouseenter', () => {
+        signinLink.style.opacity = '0.7';
+      });
+      signinButton.addEventListener('mouseleave', () => {
+        signinLink.style.opacity = '1';
       });
     </script>
 </body>

@@ -1,6 +1,7 @@
 var buttonClicked = false;
 let currentRowId;
 let currentSelectedButtonName = 'A-Z';
+let saveCheck = false;
 
 function showButtons() {
     var slideOutButtons = document.getElementById("filter-slide-out-buttons");
@@ -12,15 +13,27 @@ function showButtons() {
         buttonClicked = false;
     }
 }
+document.addEventListener("DOMContentLoaded", function() {
+    // Set the initial color based on the selected button (assuming currentSelectedButtonName is already defined)
+    var initialSelectedButton = document.querySelector('.filter-show-buttons[onclick="changeColor(\'' + currentSelectedButtonName + '\')"]');
+    if (initialSelectedButton) {
+        initialSelectedButton.classList.add('selected');
+    }
+});
+
 function changeColor(buttonName) {
     clearSearch();
     currentSelectedButtonName = buttonName;
+
+    // Remove the 'selected' class from all buttons
     var buttons = document.getElementsByClassName('filter-show-buttons');
     for (var i = 0; i < buttons.length; i++) {
-        buttons[i].style.color = 'white'; // Change all text colors to white
+        buttons[i].classList.remove('selected');
     }
-    var selectedButton = document.querySelector('button[onclick="changeColor(\'' + buttonName + '\')"]');
-    selectedButton.style.color = '#0DBC62'; // Change the text color of the clicked button to green
+
+    // Add the 'selected' class to the currently clicked button
+    var selectedButton = document.querySelector('.filter-show-buttons[onclick="changeColor(\'' + buttonName + '\')"]');
+    selectedButton.classList.add('selected');
     
     // Implement specific actions for each button here
     if (buttonName === 'A-Z') {
@@ -82,44 +95,68 @@ function changeColor(buttonName) {
         .catch(error => {
             console.error('Error:', error);
         });
+    } else if (buttonName === 'Weakest') {
+        fetch('/login_homepage?buttonName=Weakest', {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateTable(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 }
 function updateTable(data) {
     var table = document.querySelector('table');
-    
-    table.innerHTML = '';
-    
+    table.innerHTML = '<caption style="text-align:right; margin-right: 51px;">Password Strength</caption>';
+
     // Add new rows based on the updated data
     for (var i = 0; i < data.length; i++) {
         var row = table.insertRow(-1); // Insert at the end of the table
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.classList.add('left-column');
-        cell2.classList.add('right-column');
-
-        // Check if the Clearbit image URL is valid
-        var logoSrc = 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45';
-
-        // Create a closure to capture the values for this iteration
-        (function (src, cell) {
-            var img = new Image();
-            img.src = src;
-
-            img.onerror = function () {
-                // If image fails to load, use a default image URL
-                cell.innerHTML = '<img class="logo-img" src="https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found" alt="No Logo">';
-            };
-
-            // If the image loads successfully, use the Clearbit image
-            img.onload = function () {
-                cell.innerHTML = '<img class="logo-img" src="' + src + '" alt="No Logo">';
-            };
-        })(logoSrc, cell1);
-
-        cell2.innerHTML = data[i][1];
         row.setAttribute('onclick', 'fetchLoginInfo(' + data[i][0] + ')');
+
+        createCell(row, 'left-column', 'https://logo.clearbit.com/' + data[i][1] + '.com?size=45', true, data[i][0]);
+        createCell(row, 'right-column', data[i][1], false);
+        createCell(row, 'strength-column', data[i][2], false);
     }
 }
+function createCell(row, className, content, isImage, row_id) {
+    var cell = row.insertCell(-1);
+    cell.classList.add(className);
+
+    if (isImage) {
+        var img = new Image();
+        img.src = content;
+
+        img.onerror = function () {
+            cell.innerHTML = '<img class="logo-img" src="https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found" alt="No Logo">';
+        };
+
+        img.onload = function () {
+            cell.innerHTML = '<img class="logo-img" src="' + content + '" alt="No Logo">';
+        };
+    } else if (className === 'strength-column') {
+        var statusTextCell = row.insertCell(-1);
+        statusTextCell.innerHTML = '<p class="status-text">' + getRectangleName(content) + '</p>';
+
+        var rectangleContainer = document.createElement('div');
+        rectangleContainer.className = 'rectangle-container';
+
+        for (var j = 0; j < 3; j++) {
+            var rectangle = document.createElement('div');
+            rectangle.className = 'rectangle ' + getRectangleClass(content, j);
+            rectangleContainer.appendChild(rectangle);
+        }
+
+        var rectangleCell = row.insertCell(-1);
+        rectangleCell.appendChild(rectangleContainer);
+    } else {
+        cell.innerHTML = content;
+    }
+}
+
 function openConfirmModal() {
     event.preventDefault();
     document.getElementById("modal-confirm").style.display = "block";
@@ -135,6 +172,7 @@ function closeModalConform() {
     document.getElementById("modal-confirm").style.display = "none";
 }
 function closeModalView() {
+    var passwordField = document.getElementById('new-password-view');
     makeReadOnly();
     showCloneIcons();
     document.getElementById("myModal_view").style.display = "none";
@@ -145,7 +183,15 @@ function closeModalView() {
     document.querySelector('.save-button').style.display = 'none';
     document.querySelector('.edit-button').style.display = 'inline-block';
     document.querySelector('.delete-button').style.display = 'none';
-    location.reload();
+    if (passwordField.type === 'text') {
+        passwordField.type = 'password';
+        showImg.style.display = 'inline';
+        hideImg.style.display = 'none';
+    }
+    if (saveCheck) {
+        saveCheck = false;
+        changeColor(currentSelectedButtonName);
+    }
 }
 function closeModal() {
     var email_i = document.getElementById('invalid_email');
@@ -174,18 +220,18 @@ function ValidateEmail() {
     }
 
     function showEmailMessage(input) {
-    var email_i = document.getElementById('invalid_email');
-    var inputs_i = document.getElementById('invalid_inputs');
-    
-    inputs_i.style.display = 'none';
-    email_i.style.display = 'none';
-    
-    if (input === true) {
-        checkInputs();
-    }
-    else {
-        email_i.style.display = 'block';
-    }
+        var email_i = document.getElementById('invalid_email');
+        var inputs_i = document.getElementById('invalid_inputs');
+        
+        inputs_i.style.display = 'none';
+        email_i.style.display = 'none';
+        
+        if (input === true) {
+            checkInputs();
+        }
+        else {
+            email_i.style.display = 'block';
+        }
     }
 
     function checkInputs() {
@@ -234,20 +280,38 @@ function ValidateEmail() {
         console.error('Error:', error);
     });
 }        
-function copyText(inputId) {
+function copyText(inputId, iconId) {
     event.preventDefault();
     var inputElement = document.getElementById(inputId);
-    inputElement.select();
-    inputElement.setSelectionRange(0, 99999); // For mobile devices 
-    document.execCommand("copy");
-    
-    var originalHtml = document.getElementById(inputId).nextElementSibling.innerHTML;
-    document.getElementById(inputId).nextElementSibling.innerHTML = '<i class="fas fa-clipboard-check" style="color: #4CAF50; font-size: 30px;"></i>'; // Change to clipboard with check
 
-    setTimeout(function() {
-        document.getElementById(inputId).nextElementSibling.innerHTML = originalHtml; // Revert back to clone
+    // Create a temporary input element
+    var tempInput = document.createElement("input");
+    tempInput.style.position = "absolute";
+    tempInput.style.left = "-9999px";
+    document.body.appendChild(tempInput);
+
+    // Set the temporary input value to the password value
+    tempInput.setAttribute("value", inputElement.value);
+    tempInput.select();
+    document.execCommand("copy");
+
+    // Clean up: remove the temporary input
+    document.body.removeChild(tempInput);
+
+    var iconElement = document.getElementById(iconId);
+    iconElement.className = "fas fa-clipboard-check"; // Change the icon to indicate successful copy
+
+    setTimeout(function () {
+        iconElement.className = "far fa-clone"; // Revert back to the original icon
     }, 1000); // Revert after 1 second(s)
+
+    // Focus on the original input field after a short delay
+    setTimeout(function () {
+        inputElement.focus();
+        inputElement.select(); // Select the input field content
+    }, 50); // Set focus after 50 milliseconds
 }
+
 function makeEditable() {
     event.preventDefault();
 
@@ -270,6 +334,7 @@ function makeEditable() {
 }
 function saveChanges() {
     event.preventDefault();
+    saveCheck = true;
 
     let lid = currentRowId;
     var website = document.getElementById('new-website-view').value;
@@ -323,6 +388,7 @@ function makeReadOnly() {
 }
 function deleteEntry() {
     event.preventDefault();
+    closeModalConform();
 
     var data = {
         row_id: currentRowId
@@ -379,4 +445,49 @@ function clearSearch() {
 function replaceWithErrorImage(image) {
     image.onerror = null;
     image.src = "https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found";
+}
+function getRectangleClass(strength, target_rectangle) {
+    if (strength === 0) {
+        return 'weak';
+    } else if (strength === 1) {
+        if (target_rectangle === 0) {
+            return 'filled_okay';
+        } else {
+            return 'empty_okay';
+        }
+    } else if (strength === 2) {
+        if (target_rectangle === 2) {
+            return 'empty_great';
+        } else {
+            return 'filled_great';
+        }
+    } else {
+        return 'excellent';
+    }
+}
+function getRectangleName(strength) {
+    if (strength === 0) {
+        return 'Weak';
+    } else if (strength === 1) {
+        return 'Okay';
+    } else if (strength === 2) {
+        return 'Great';
+    } else {
+        return 'Excellent';
+    }
+}
+function togglePasswordVisibility() {
+    var passwordField = document.getElementById('new-password-view');
+    var showImg = document.getElementById('showImg');
+    var hideImg = document.getElementById('hideImg');
+
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      showImg.style.display = 'none';
+      hideImg.style.display = 'inline';
+    } else {
+      passwordField.type = 'password';
+      showImg.style.display = 'inline';
+      hideImg.style.display = 'none';
+    }
 }
