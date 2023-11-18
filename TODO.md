@@ -2,7 +2,7 @@
 
 ### Required:
 
-- [ ] Make it so passwords are hidden by default for both the settings and logins
+- [X] Make it so passwords are hidden by default for both the settings and logins
 - [X] password strength code
 - [X] make it so that when clicking on the left shield pass text it goes to the login homepage
 - [X] make it so buttons are interactable (CSS)
@@ -22,4 +22,4 @@
 - [X] when you click on login it shouldn't reset the filters
 - [ ] making the checkbox just a square
 - [X] delete not deleting
-- [ ] when spamming copy, the copy button stays
+- [X] when spamming copy, the copy button stays
