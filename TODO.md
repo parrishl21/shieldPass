@@ -2,20 +2,24 @@
 
 ### Required:
 
-- [ ] Make it so passwords are hidden by default for both the settings and logins
-- [ ] password strength code
-- [ ] make it so when clicking on the left shield pass text it goes to the login homepage
-- [ ] make it so buttons are interactible (CSS)
+- [X] Make it so passwords are hidden by default for both the settings and logins
+- [X] password strength code
+- [X] make it so that when clicking on the left shield pass text it goes to the login homepage
+- [X] make it so buttons are interactable (CSS)
+- [X] filter by password strength (weakest)
 
 ### Optional:
 
 - [ ] consider putting the password strength in the generator
-- [ ] change hide and show images are icons
+- [X] change hide and show images are icons
 - [ ] when there is no scrollbar, there is a green square
 - [ ] automatically submit 2fa code after putting in the last digit
 - [ ] light mode
+- [ ] transitions (filter at least)
 
 ### Bugs:
 
-- [ ] when you click on a login it shouldn't reset filters
-- [ ] making checkbox just a square
+- [X] when you click on login it shouldn't reset the filters
+- [ ] making the checkbox just a square
+- [X] delete not deleting
+- [X] when spamming copy, the copy button stays
