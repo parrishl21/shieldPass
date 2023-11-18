@@ -304,6 +304,12 @@ function copyText(inputId, iconId) {
     setTimeout(function () {
         iconElement.className = "far fa-clone"; // Revert back to the original icon
     }, 1000); // Revert after 1 second(s)
+
+    // Focus on the original input field after a short delay
+    setTimeout(function () {
+        inputElement.focus();
+        inputElement.select(); // Select the input field content
+    }, 50); // Set focus after 50 milliseconds
 }
 
 function makeEditable() {

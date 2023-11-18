@@ -128,10 +128,10 @@ b {
 .slider::-moz-range-track {
     cursor: pointer;
 }
-#clone-icon {
+#username-clone-icon {
     color: #4CAF50;
 }
-#clone-icon:hover {
+#username-clone-icon:hover {
     color: #11E779;
 }
 .generate-button {
