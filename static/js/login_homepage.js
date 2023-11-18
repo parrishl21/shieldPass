@@ -172,6 +172,7 @@ function closeModalConform() {
     document.getElementById("modal-confirm").style.display = "none";
 }
 function closeModalView() {
+    var passwordField = document.getElementById('new-password-view');
     makeReadOnly();
     showCloneIcons();
     document.getElementById("myModal_view").style.display = "none";
@@ -182,6 +183,11 @@ function closeModalView() {
     document.querySelector('.save-button').style.display = 'none';
     document.querySelector('.edit-button').style.display = 'inline-block';
     document.querySelector('.delete-button').style.display = 'none';
+    if (passwordField.type === 'text') {
+        passwordField.type = 'password';
+        showImg.style.display = 'inline';
+        hideImg.style.display = 'none';
+    }
     if (saveCheck) {
         saveCheck = false;
         changeColor(currentSelectedButtonName);
@@ -376,6 +382,7 @@ function makeReadOnly() {
 }
 function deleteEntry() {
     event.preventDefault();
+    closeModalConform();
 
     var data = {
         row_id: currentRowId
