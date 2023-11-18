@@ -28,8 +28,9 @@
     transform: translateY(120%);
     border: 0;
     cursor: pointer;
+    z-index: 1;
 }
-.shieldPass-container:hover .shieldPass-text {
+.shieldPass-button:hover + .shieldPass-text {
     color: #11E779;
 }
 .input-container {
