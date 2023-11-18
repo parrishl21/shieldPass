@@ -62,7 +62,13 @@
         <div id="settingsBox" class="settings-box">
             <div class="settings-content">
                 <p class="settings-name-text">Current Password</p>
-                <input class="settings-input" type="text" id="password" name="password" type="text" value="{{password}}" readonly>
+                <div class="password-container">
+                    <input class="settings-input" type="password" id="password" name="password" type="text" value="{{password}}" readonly>
+                    <span class="show-password" onclick="togglePasswordVisibility()">
+                      <i class="fa fa-eye-slash fa-2x" aria-hidden="true" id="showImg" alt="Show" style="display: inline;"></i>
+                      <i class="fa fa-eye fa-2x" aria-hidden="true" id="hideImg" alt="Hide" style="display: none;"></i>
+                    </span>
+                </div>
                 <form id="loginForm" action="/settings" method="post">
                     <p class="settings-name-text">New Email</p>
                     <input class="settings-input" type="text" id="email" name="email" type="text" value="{{email}}">
@@ -173,5 +179,20 @@
             })
             .catch(error => console.error('Error:', error));
         };
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('password');
+            var showImg = document.getElementById('showImg');
+            var hideImg = document.getElementById('hideImg');
+      
+            if (passwordField.type === 'password') {
+              passwordField.type = 'text';
+              showImg.style.display = 'none';
+              hideImg.style.display = 'inline';
+            } else {
+              passwordField.type = 'password';
+              showImg.style.display = 'inline';
+              hideImg.style.display = 'none';
+            }
+          }
     </script>
 </body>
