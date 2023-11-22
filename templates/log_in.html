@@ -54,11 +54,13 @@
     </div>
 
     <script>
+      // Variables that store the button and links for the signup and reset
       const signupButton = document.getElementById('signupButton');
       const signupLink = document.getElementById('signupLink');
       const resetLink = document.getElementById('resetLink');
       const resetButton = document.getElementById('resetButton');
 
+      // Function that validates if an input is a valid email
       function ValidateEmail() {
         var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -74,11 +76,13 @@
         }
       }
       
+      // Function that shows an email message
       function showEmailMessage(input) {
         var email_i = document.getElementById('invalid_email');
       
         email_i.style.display = 'none';
-      
+        
+        // If the email is not valid, an error message is shown otherwise, submits the form
         if (input === true) {
           document.getElementById("loginForm").submit();
         }
@@ -87,6 +91,7 @@
         }
       }
 
+      // Clears an html element
       function clearMessage(id) {
         var messageElement = document.getElementById(id);
         if (messageElement) {
@@ -94,11 +99,13 @@
         }
       }
 
+      // Function that toggles the visibility of the password
       function togglePasswordVisibility() {
         var passwordField = document.getElementById('password_input');
         var showImg = document.getElementById('showImg');
         var hideImg = document.getElementById('hideImg');
-  
+        
+        // Shows the password if the input is password otherwise hides the password by making the input a password from text
         if (passwordField.type === 'password') {
           passwordField.type = 'text';
           showImg.style.display = 'none';
@@ -109,6 +116,8 @@
           hideImg.style.display = 'none';
         }
       }
+
+      // Events that check when entering elements to lower their opacity
       signupButton.addEventListener('mouseenter', () => {
         signupLink.style.opacity = '0.7';
       });
