@@ -58,6 +58,7 @@
     </div>
     
     <script>
+      // Function that validates if an input is a valid email
       function ValidateEmail() {
         var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         
@@ -73,13 +74,15 @@
         }
       }
 
+      // Function that shows an email message
       function showEmailMessage(input) {
         var email_i = document.getElementById('invalid_email');
         var pass_i = document.getElementById('invalid_password');
 
         email_i.style.display = 'none';
         pass_i.style.display = 'none';
-      
+        
+        // If the email is not valid, an error message is shown otherwise, submits the form
         if (input === true) {
           passwordChecker();
         }
@@ -88,12 +91,14 @@
         }
       }
 
+      // Function that checks if two inputted passwords are matching
       function passwordChecker() {
         var password = document.getElementById("password_input").value;
         var passwordConfirm = document.getElementById("password_confirm_input").value;
         const signinButton = document.getElementById('signinButton');
         const signinLink = document.getElementById('signinLink');
 
+        // If the two inputted passwords are the same, it submits the form, otherwise it displays an error message
         if (password && passwordConfirm) {
           if (password === passwordConfirm) {
             document.getElementById("loginForm").submit();
@@ -109,6 +114,7 @@
         }
       }
 
+      // Function that clears an html element
       function clearMessage(id) {
         var messageElement = document.getElementById(id);
         if (messageElement) {
@@ -116,11 +122,13 @@
         }
       }
 
+      // Function that toggles the visibility of the first password
       function togglePasswordVisibility1() {
         var passwordField = document.getElementById('password_input');
         var showImg = document.getElementById('showImg1');
         var hideImg = document.getElementById('hideImg1');
-  
+        
+        // Shows the password if the input is password otherwise hides the password by making the input a password from text
         if (passwordField.type === 'password') {
           passwordField.type = 'text';
           showImg.style.display = 'none';
@@ -132,11 +140,13 @@
         }
       }
 
+      // Function that toggles the visibility of the second password
       function togglePasswordVisibility2() {
         var passwordField = document.getElementById('password_confirm_input');
         var showImg = document.getElementById('showImg2');
         var hideImg = document.getElementById('hideImg2');
-  
+        
+        // Shows the password if the input is password otherwise hides the password by making the input a password from text
         if (passwordField.type === 'password') {
           passwordField.type = 'text';
           showImg.style.display = 'none';
@@ -147,6 +157,8 @@
           hideImg.style.display = 'none';
         }
       }
+
+      // Event listener that submits the form when clicking enter inside of an input
       document.addEventListener('DOMContentLoaded', function () {
         var myForm = document.getElementById('loginForm');
         
@@ -158,6 +170,8 @@
           }
         });
       });
+
+      // Events that check when entering elements to lower their opacity
       signinButton.addEventListener('mouseenter', () => {
         signinLink.style.opacity = '0.7';
       });

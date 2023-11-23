@@ -30,6 +30,7 @@ function copyText(inputId, iconId) {
     }, 50); // Set focus after 50 milliseconds
 }
 
+// Function that updates the password length text and generates a password
 function updateLength() {
     let slider = document.getElementById("generator-length");
     let length = slider.value;
@@ -41,8 +42,11 @@ function updateLength() {
 
 }
 
+// Function that generates a password
 function generatePassword() {
     event.preventDefault();
+
+    // Arrays which hold all possible values
     let masterArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     let lowerArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     let uppercaseArray = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -61,16 +65,15 @@ function generatePassword() {
     let includeNumber = document.getElementById("generator-numbers").checked;
     let includeSymbol = document.getElementById("generator-symbols").checked;
 
+    // If the checkboxes are checked, then the respective options are added to the possible choices
     if (includeUpper) {
         upperStart = masterArray.length;
         masterArray.push(...uppercaseArray);
     }
-
     if (includeNumber) {
         numberStart = masterArray.length;
         masterArray.push(...numberArray);
     }
-
     if (includeSymbol) {
         symbolStart = masterArray.length;
         masterArray.push(...symbolArray);

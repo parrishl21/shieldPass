@@ -85,18 +85,7 @@
                         <p class="reset-text">Reset password</p>
                     </button>
                 </div>
-                <!-- <div class="dark-mode-container">
-                    <input class="dark-mode-checkbox" id="darkMode" name="darkMode" type="checkbox" onchange="darkMode()" checked>
-                    <label class="dark-mode-text" for="darkMode">Dark Mode</label>
-                </div> -->
                 <button class="delete-text delete-button-hover" onclick="openPopup()">Delete Account</button>
-                <!-- <div id="popup_view" class="popup">
-                    <div class="popup-content">
-                        <p class="confirmation-message">Are you sure you want to delete your ShieldPass account?</p>
-                        <button id="deleteButton" class="text-button" onclick="deleteUser()">Yes, Proceed</button>
-                        <button id="cancelButton" onclick="closePopup()" class="button" >Cancel</button>
-                    </div>
-                </div> -->
                 <div id="modal-confirm" class="modal-confirm">
                     <div id="modal-confirm-content" class="modal-confirm-content">
                         <p class="confirm-modal-text">Are you sure you want to delete</p>
@@ -112,6 +101,7 @@
     </div>
 
     <script>
+        // Functions to open and close the confirm modal
         function openPopup(){
             document.getElementById('modal-confirm').style.display = 'block';
         }
@@ -119,6 +109,7 @@
             document.getElementById('modal-confirm').style.display = 'none';
         }
 
+        // Function that validates if an input is a valid email
         function ValidateEmail() {
             var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
@@ -134,11 +125,13 @@
             }
         }
 
+        // Function that shows an email message
         function showEmailMessage(input) {
             var email_i = document.getElementById('invalid_email');
             
             email_i.style.display = 'none';
             
+            // If the email is not valid, an error message is shown otherwise, submits the form
             if (input === true) {
                 document.getElementById("loginForm").submit();
             }
@@ -147,15 +140,7 @@
             }
         }
 
-        function darkMode() {
-            var checkBox = document.getElementById("darkMode");
-            if (checkBox.checked == true){
-                document.body.classList.remove('light-mode');
-            } else {
-                document.body.classList.add('light-mode');
-            }
-        }
-
+        // Function that clears an html element
         function clearMessage(id) {
             var messageElement = document.getElementById(id);
             if (messageElement) {
@@ -163,6 +148,7 @@
             }
         }
 
+        // Function that deletes a user and logs the user out of the current session
         function deleteUser() {
             closePopup();
             fetch('/delete_user', {
@@ -179,11 +165,14 @@
             })
             .catch(error => console.error('Error:', error));
         };
+
+        // Function that toggles the visibility of the password
         function togglePasswordVisibility() {
             var passwordField = document.getElementById('password');
             var showImg = document.getElementById('showImg');
             var hideImg = document.getElementById('hideImg');
       
+            // Shows the password if the input is password otherwise hides the password by making the input a password from text
             if (passwordField.type === 'password') {
               passwordField.type = 'text';
               showImg.style.display = 'none';
