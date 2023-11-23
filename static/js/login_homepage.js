@@ -3,6 +3,7 @@ let currentRowId;
 let currentSelectedButtonName = 'A-Z';
 let saveCheck = false;
 
+// Function to show and hide or show buttons
 function showButtons() {
     var slideOutButtons = document.getElementById("filter-slide-out-buttons");
     if (!buttonClicked) {
@@ -13,14 +14,17 @@ function showButtons() {
         buttonClicked = false;
     }
 }
+
+// Event listener to listen for a button to be clicked
 document.addEventListener("DOMContentLoaded", function() {
-    // Set the initial color based on the selected button (assuming currentSelectedButtonName is already defined)
+    // Sets the initial color based on the selected button (assuming currentSelectedButtonName is already defined)
     var initialSelectedButton = document.querySelector('.filter-show-buttons[onclick="changeColor(\'' + currentSelectedButtonName + '\')"]');
     if (initialSelectedButton) {
         initialSelectedButton.classList.add('selected');
     }
 });
 
+// Function that changes the color of the filter buttons
 function changeColor(buttonName) {
     clearSearch();
     currentSelectedButtonName = buttonName;
@@ -35,7 +39,7 @@ function changeColor(buttonName) {
     var selectedButton = document.querySelector('.filter-show-buttons[onclick="changeColor(\'' + buttonName + '\')"]');
     selectedButton.classList.add('selected');
     
-    // Implement specific actions for each button here
+    // Does a get depending on which button was clicked
     if (buttonName === 'A-Z') {
         fetch('/login_homepage?buttonName=A-Z', {
             method: 'GET'
@@ -108,6 +112,8 @@ function changeColor(buttonName) {
         });
     }
 }
+
+// Function that updates the table depending on the data from the GET in the changeColor function
 function updateTable(data) {
     var table = document.querySelector('table');
     table.innerHTML = '<caption style="text-align:right; margin-right: 51px;">Password Strength</caption>';
@@ -122,6 +128,8 @@ function updateTable(data) {
         createCell(row, 'strength-column', data[i][2], false);
     }
 }
+
+// Function that creates a cell (div for the html) for the updateTable function
 function createCell(row, className, content, isImage, row_id) {
     var cell = row.insertCell(-1);
     cell.classList.add(className);
@@ -157,6 +165,7 @@ function createCell(row, className, content, isImage, row_id) {
     }
 }
 
+// Functions to open modals
 function openConfirmModal() {
     event.preventDefault();
     document.getElementById("modal-confirm").style.display = "block";
@@ -167,10 +176,8 @@ function openViewModal() {
 function openModal() {
     document.getElementById("myModal").style.display = "block";
 }
-function closeModalConform() {
-    event.preventDefault();
-    document.getElementById("modal-confirm").style.display = "none";
-}
+
+// Functions to close modals
 function closeModalView() {
     var passwordField = document.getElementById('new-password-view');
     makeReadOnly();
@@ -204,7 +211,12 @@ function closeModal() {
     document.getElementById("new-username").value = "";
     document.getElementById("new-password").value = "";
 }
+function closeModalConform() {
+    event.preventDefault();
+    document.getElementById("modal-confirm").style.display = "none";
+}
 
+// Function to validate if an input is a valid email
 function ValidateEmail() {
     event.preventDefault();
     var validRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -217,24 +229,26 @@ function ValidateEmail() {
         showEmailMessage(false);
         return false;
     }
-    }
+}
 
-    function showEmailMessage(input) {
-        var email_i = document.getElementById('invalid_email');
-        var inputs_i = document.getElementById('invalid_inputs');
-        
-        inputs_i.style.display = 'none';
-        email_i.style.display = 'none';
-        
-        if (input === true) {
-            checkInputs();
-        }
-        else {
-            email_i.style.display = 'block';
-        }
+// Function to show and hide a message depending on the input from ValidateEmail
+function showEmailMessage(input) {
+    var email_i = document.getElementById('invalid_email');
+    var inputs_i = document.getElementById('invalid_inputs');
+    
+    inputs_i.style.display = 'none';
+    email_i.style.display = 'none';
+    
+    if (input === true) {
+        checkInputs();
     }
+    else {
+        email_i.style.display = 'block';
+    }
+}
 
-    function checkInputs() {
+// Function that checks if all the inputs are filled in
+function checkInputs() {
     var inputs_i = document.getElementById('invalid_inputs');
     var input1 = document.getElementById("new-website").value;
     var input2 = document.getElementById("new-email").value;
@@ -246,9 +260,10 @@ function ValidateEmail() {
     } else {
         inputs_i.style.display = 'block';
     }
-    }
+}
 
-    function fetchLoginInfo(row_id) {
+// Function that fetches log in information from the Database
+function fetchLoginInfo(row_id) {
     currentRowId = row_id;
 
     // Perform an update call to increment a column by one
@@ -279,7 +294,9 @@ function ValidateEmail() {
     .catch(error => {
         console.error('Error:', error);
     });
-}        
+}
+
+// Function that copies text from an input
 function copyText(inputId, iconId) {
     event.preventDefault();
     var inputElement = document.getElementById(inputId);
@@ -312,6 +329,7 @@ function copyText(inputId, iconId) {
     }, 50); // Set focus after 50 milliseconds
 }
 
+// Function that makes an input editable
 function makeEditable() {
     event.preventDefault();
 
@@ -332,6 +350,8 @@ function makeEditable() {
     // Display the delete button
     document.querySelector('.delete-button').style.display = 'inline-block';
 }
+
+// Function that saves changes to the Databse
 function saveChanges() {
     event.preventDefault();
     saveCheck = true;
@@ -374,18 +394,24 @@ function saveChanges() {
 
     document.querySelector('.delete-button').style.display = 'none';
 }
+
+// Function that shows the clone icon
 function showCloneIcons() {
     var copyButtons = document.querySelectorAll('.copy-button');
     copyButtons.forEach(function(button) {
         button.style.display = 'inline-block';
     });
 }
+
+// Function that makes an input read only
 function makeReadOnly() {
     var inputFields = document.querySelectorAll('.new-password-input');
     inputFields.forEach(function(input) {
         input.readOnly = true;
     });
 }
+
+// Function that deletes an entry from the databse
 function deleteEntry() {
     event.preventDefault();
     closeModalConform();
@@ -409,6 +435,8 @@ function deleteEntry() {
         console.error('Error:', error);
     });
 }
+
+// Function that searches the Database accroding to what is put in the search input
 function searchDatabase() {
     clearFilterColors();
     var inputText = document.getElementById('searchInput').value;
@@ -433,19 +461,27 @@ function searchDatabase() {
         console.error('Error:', error);
     });
 }
+
+// Function that clears the filter colors
 function clearFilterColors() {
     var buttons = document.getElementsByClassName('filter-show-buttons');
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].style.color = 'white';
     }
 }
+
+// Function that clears the search input
 function clearSearch() {
     document.getElementById('searchInput').value = '';
 }
+
+// Function to replace error images with a default image
 function replaceWithErrorImage(image) {
     image.onerror = null;
     image.src = "https://placehold.co/45/EEE/31343C?font=raleway&text=No-Image-Found";
 }
+
+// Function that sets the classes of the html rectangles for the strength
 function getRectangleClass(strength, target_rectangle) {
     if (strength === 0) {
         return 'weak';
@@ -465,6 +501,8 @@ function getRectangleClass(strength, target_rectangle) {
         return 'excellent';
     }
 }
+
+// Function that changes the text of the html rectangles for the strength
 function getRectangleName(strength) {
     if (strength === 0) {
         return 'Weak';
@@ -476,6 +514,8 @@ function getRectangleName(strength) {
         return 'Excellent';
     }
 }
+
+// Function that toggles the visibility of a password
 function togglePasswordVisibility() {
     var passwordField = document.getElementById('new-password-view');
     var showImg = document.getElementById('showImg');
