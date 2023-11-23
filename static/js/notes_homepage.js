@@ -1,5 +1,6 @@
-let currentRowId;
+let currentRowId; // Stores the current row id
 
+// Function that gets the Database row info
 function fetchNoteInfo(row_id) {
     currentRowId = row_id;
 
@@ -19,9 +20,13 @@ function fetchNoteInfo(row_id) {
                 console.error('Error:', error);
             });
 }
+
+// Function to open the view modal
 function openViewModal() {
     document.getElementById("myModal_view").style.display = "block";
 }
+
+// Function to close the view modal
 function closeModalView() {
     document.getElementById("myModal_view").style.display = "none";
     document.getElementById("note-name-view").value = "";
@@ -39,6 +44,8 @@ function closeModalView() {
     makeReadOnly();
     location.reload();
 }
+
+// Function that searches the Database according to the input
 function searchDatabase() {
     var inputText = document.getElementById('searchInput').value;
     fetch('/search_notes', {
@@ -56,6 +63,8 @@ function searchDatabase() {
         console.error('Error:', error);
     });
 }
+
+// Function that makes an input editable 
 function makeEditable() {
     event.preventDefault();
 
@@ -81,6 +90,8 @@ function makeEditable() {
     // Display the delete button
     document.querySelector('.delete-button').style.display = 'inline-block';
 }
+
+// Function that saves changes to the Database
 function saveChanges() {
     event.preventDefault();
 
@@ -106,7 +117,6 @@ function saveChanges() {
     .then(response => response.json())
     .then(data => {
         console.log('Data saved:', data);
-        // showCloneIcons();
         makeReadOnly();
     })
     .catch((error) => {
@@ -123,6 +133,8 @@ function saveChanges() {
 
     document.querySelector('.delete-button').style.display = 'none';
 }
+
+// Function that makes inputs read only
 function makeReadOnly() {
     var inputFields = document.querySelectorAll('.note-name-input');
     var inputFieldsLong = document.querySelectorAll('.note-name-input-long');
@@ -133,10 +145,14 @@ function makeReadOnly() {
         input.readOnly = true;
     });
 }
+
+// Function that opens the confirm modal
 function openConfirmModal() {
     event.preventDefault();
     document.getElementById("modal-confirm").style.display = "block";
 }
+
+// Function that deletes an entry from the Database
 function deleteEntry() {
     event.preventDefault();
 
@@ -159,13 +175,19 @@ function deleteEntry() {
         console.error('Error:', error);
     });
 }
+
+// Function that closes the confirm modal
 function closeModalConform() {
     event.preventDefault();
     document.getElementById("modal-confirm").style.display = "none";
 }
+
+// Function that opens the inital modal
 function openModal() {
     document.getElementById("myModal").style.display = "block";
 }
+
+// Function that closes the inital modal
 function closeModal() {
     var inputs_i = document.getElementById('invalid_inputs');
     inputs_i.style.display = 'none';
@@ -173,6 +195,8 @@ function closeModal() {
     document.getElementById("note-name-add").value = "";
     document.getElementById("note-add").value = "";
 }
+
+// Function that checks if the inputs are filled
 function checkInputs() {
     event.preventDefault();
     var inputs_i = document.getElementById('invalid_inputs');
@@ -187,6 +211,8 @@ function checkInputs() {
         inputs_i.style.display = 'block';
     }
 }
+
+// Function that checks if there have been changes and saves them if so
 function checkInputsSave() {
     event.preventDefault();
     var inputs_i = document.getElementById('invalid_inputs_view');
@@ -201,6 +227,8 @@ function checkInputsSave() {
         inputs_i.style.display = 'block';
     }
 }
+
+// Function that updates a note in the Database
 function updateNote(data) {
     var noteContainer = document.querySelector('.notes-container');
     noteContainer.innerHTML = '';
